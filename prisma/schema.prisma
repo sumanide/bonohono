@@ -1,0 +1,256 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model applications {
+  id              String               @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  job_id          String               @db.Char(36)
+  tasker_id       String               @db.Char(36)
+  proposal        String               @db.Text
+  proposed_budget Decimal?             @db.Decimal(15, 2)
+  status          applications_status? @default(pending)
+  created_at      DateTime?            @default(now()) @db.Timestamp(0)
+  updated_at      DateTime?            @default(now()) @db.Timestamp(0)
+  jobs            jobs                 @relation(fields: [job_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "applications_job_id_fk")
+  users           users                @relation(fields: [tasker_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "applications_tasked_id_fk")
+
+  @@unique([job_id, tasker_id], map: "unique_job_tasker")
+  @@index([job_id], map: "idx_applications_job")
+  @@index([status], map: "idx_applications_status")
+  @@index([tasker_id], map: "idx_applications_tasker")
+}
+
+model categories {
+  id          String    @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  name        String    @unique(map: "name") @db.VarChar(100)
+  description String?   @db.Text
+  parent_id   String?   @db.Char(36)
+  created_at  DateTime? @default(now()) @db.Timestamp(0)
+  updated_at  DateTime? @default(now()) @db.Timestamp(0)
+  jobs        jobs[]
+
+  @@index([name], map: "idx_categories_name")
+}
+
+model jobs {
+  id               String                 @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  poster_id        String                 @db.Char(36)
+  title            String                 @db.VarChar(255)
+  description      String                 @db.Text
+  category_id      String?                @db.Char(36)
+  budget           Decimal                @db.Decimal(15, 2)
+  status           jobs_status
+  deadline         DateTime?              @db.Timestamp(0)
+  location         String?                @db.VarChar(255)
+  created_at       DateTime?              @default(now()) @db.Timestamp(0)
+  updated_at       DateTime?              @default(now()) @db.Timestamp(0)
+  work_type        jobs_work_type?        @default(remote)
+  commitment       jobs_commitment?       @default(full_time)
+  experience_level jobs_experience_level? @default(intermediate)
+  payment_type     jobs_payment_type?     @default(fixed)
+  skills           String?                @db.Text
+  applications     applications[]
+  categories       categories?            @relation(fields: [category_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "users_id_category_id_fk")
+  users            users                  @relation(fields: [poster_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "users_id_poster_id_fk")
+  payments         payments[]
+
+  @@index([category_id], map: "idx_jobs_category")
+  @@index([commitment], map: "idx_jobs_commitment")
+  @@index([created_at], map: "idx_jobs_created_at")
+  @@index([deadline], map: "idx_jobs_deadline")
+  @@index([experience_level], map: "idx_jobs_experience_level")
+  @@index([poster_id], map: "idx_jobs_poster")
+  @@index([status], map: "idx_jobs_status")
+  @@index([work_type], map: "idx_jobs_work_type")
+}
+
+model payment_methods {
+  id           String    @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  user_id      String    @db.Char(36)
+  type         String    @db.VarChar(50)
+  card_number  String    @db.VarChar(255)
+  card_holder  String    @db.VarChar(255)
+  expiry_month Int?
+  expiry_year  Int?
+  cvv          String?   @db.VarChar(255)
+  is_default   Boolean?  @default(false)
+  created_at   DateTime? @default(now()) @db.Timestamp(0)
+  updated_at   DateTime? @default(now()) @db.Timestamp(0)
+  users        users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "payments_method_user_id")
+
+  @@index([user_id, is_default], map: "idx_is_default")
+  @@index([user_id], map: "idx_user_id")
+}
+
+model payments {
+  id                                String           @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  job_id                            String           @db.Char(36)
+  sender_id                         String           @db.Char(36)
+  receiver_id                       String           @db.Char(36)
+  amount                            Decimal          @db.Decimal(15, 2)
+  status                            payments_status? @default(pending)
+  payment_method                    String?          @db.VarChar(50)
+  transaction_id                    String?          @db.VarChar(255)
+  created_at                        DateTime?        @default(now()) @db.Timestamp(0)
+  updated_at                        DateTime?        @default(now()) @db.Timestamp(0)
+  jobs                              jobs             @relation(fields: [job_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "payments_job_id_fk")
+  users_payments_receiver_idTousers users            @relation("payments_receiver_idTousers", fields: [receiver_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "payments_receiver_id_fk")
+  users_payments_sender_idTousers   users            @relation("payments_sender_idTousers", fields: [sender_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "payments_sender_id_fk")
+
+  @@index([job_id], map: "idx_payments_job")
+  @@index([receiver_id], map: "idx_payments_receiver")
+  @@index([sender_id], map: "idx_payments_sender")
+  @@index([status], map: "idx_payments_status")
+}
+
+model skills {
+  id          String        @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  name        String        @unique(map: "name") @db.VarChar(100)
+  created_at  DateTime?     @default(now()) @db.Timestamp(0)
+  user_skills user_skills[]
+
+  @@index([name], map: "idx_skills_name")
+}
+
+model transactions {
+  id             String               @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  wallet_id      String               @db.Char(36)
+  type           transactions_type
+  amount         Decimal              @db.Decimal(15, 2)
+  description    String?              @db.Text
+  reference_id   Int?
+  reference_type String?              @db.VarChar(50)
+  status         transactions_status? @default(completed)
+  created_at     DateTime?            @default(now()) @db.Timestamp(0)
+  wallets        wallets              @relation(fields: [wallet_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "transactions_wallet_id_fk")
+
+  @@index([wallet_id], map: "transactions_wallet_id_fk")
+}
+
+model user_skills {
+  id         String    @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  user_id    String    @db.Char(36)
+  skill_id   String    @db.Char(36)
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+  skills     skills    @relation(fields: [skill_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "skill_id_fk")
+  users      users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "user_id_fk")
+
+  @@unique([user_id, skill_id], map: "unique_user_skill")
+  @@index([skill_id], map: "idx_user_skills_skill")
+  @@index([user_id], map: "idx_user_skills_user")
+}
+
+model users {
+  id                                   String            @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  name                                 String            @db.VarChar(255)
+  email                                String            @unique(map: "email") @db.VarChar(255)
+  password                             String            @db.VarChar(255)
+  firstName                            String?           @db.VarChar(255)
+  lastName                             String?           @db.VarChar(255)
+  reset_token                          String?           @unique(map: "reset_token") @db.VarChar(255)
+  reset_token_expiry                   DateTime?         @db.DateTime(0)
+  phone                                String?           @db.VarChar(20)
+  bio                                  String?           @db.Text
+  avatar                               String?           @db.VarChar(255)
+  created_at                           DateTime?         @default(now()) @db.Timestamp(0)
+  updated_at                           DateTime?         @default(now()) @db.Timestamp(0)
+  poster                               Int?              @default(1) @db.TinyInt
+  settings                             String?           @db.LongText
+  availability_status                  String?           @default("available") @db.VarChar(20)
+  avg_rating                           Decimal?          @default(0.00) @db.Decimal(3, 2)
+  total_reviews                        Int?              @default(0)
+  wallet_id                            String            @db.Char(36)
+  applications                         applications[]
+  jobs                                 jobs[]
+  payment_methods                      payment_methods[]
+  payments_payments_receiver_idTousers payments[]        @relation("payments_receiver_idTousers")
+  payments_payments_sender_idTousers   payments[]        @relation("payments_sender_idTousers")
+  user_skills                          user_skills[]
+
+  @@index([email], map: "idx_email")
+  @@index([reset_token], map: "idx_reset_token")
+  @@index([poster], map: "idx_role")
+  @@index([id], map: "idx_users_settings")
+}
+
+model wallets {
+  id           String         @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  type         wallets_type
+  balance      Decimal?       @default(0.00) @db.Decimal(15, 2)
+  currency     String?        @default("USD") @db.VarChar(10)
+  created_at   DateTime?      @default(now()) @db.Timestamp(0)
+  updated_at   DateTime?      @default(now()) @db.Timestamp(0)
+  transactions transactions[]
+}
+
+enum wallets_type {
+  e_wallet @map("e-wallet")
+  credit
+  debit
+}
+
+enum transactions_type {
+  e_wallet @map("e-wallet")
+  credit
+  debit
+}
+
+enum applications_status {
+  pending
+  accepted
+  rejected
+}
+
+enum payments_status {
+  pending
+  completed
+  failed
+  refunded
+}
+
+enum jobs_status {
+  open
+  in_progress
+  ready_for_payment
+  completed
+  cancelled
+}
+
+enum transactions_status {
+  pending
+  completed
+  failed
+}
+
+enum jobs_work_type {
+  remote
+  onsite
+  hybrid
+}
+
+enum jobs_commitment {
+  full_time @map("full-time")
+  part_time @map("part-time")
+  contract
+  freelance
+  temporary
+}
+
+enum jobs_experience_level {
+  entry
+  intermediate
+  experienced
+  expert
+}
+
+enum jobs_payment_type {
+  fixed
+  hourly
+  project
+  milestone
+}
