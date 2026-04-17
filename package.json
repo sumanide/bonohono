@@ -1,0 +1,18 @@
+{
+  "name": "bono",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts"
+  },
+  "dependencies": {
+    "@prisma/adapter-mariadb": "^7.7.0",
+    "@prisma/client": "^7.7.0",
+    "figlet": "^1.11.0",
+    "hono": "^4.12.14",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.12",
+    "@types/figlet": "^1.7.0",
+    "prisma": "^7.7.0"
+  }
+}
