@@ -1,5 +1,18 @@
 import { IntrinsicException } from "./http_intrinsic_exception.ts";
+import {
+  type HttpExceptionBody,
+  type HttpExceptionBodyMessage,
+} from "./http-exception-body.ts";
 
+export interface HttpExceptionOptions {
+  /** original cause of the error */
+  cause?: unknown;
+  description?: string;
+}
+export interface DescriptionAndOptions {
+  description?: string;
+  httpExceptionOptions?: HttpExceptionOptions;
+}
 export declare class HttpException extends IntrinsicException {
   private readonly response;
   private readonly status;
