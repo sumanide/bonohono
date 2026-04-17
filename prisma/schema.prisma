@@ -147,11 +147,10 @@ model user_skills {
 
 model users {
   id                                   String            @id @default(dbgenerated("(uuid())")) @db.Char(36)
-  name                                 String            @db.VarChar(255)
   email                                String            @unique(map: "email") @db.VarChar(255)
   password                             String            @db.VarChar(255)
-  firstName                            String?           @db.VarChar(255)
-  lastName                             String?           @db.VarChar(255)
+  first_name                           String            @db.VarChar(255)
+  last_name                            String?           @db.VarChar(255)
   reset_token                          String?           @unique(map: "reset_token") @db.VarChar(255)
   reset_token_expiry                   DateTime?         @db.DateTime(0)
   phone                                String?           @db.VarChar(20)
@@ -164,13 +163,13 @@ model users {
   availability_status                  String?           @default("available") @db.VarChar(20)
   avg_rating                           Decimal?          @default(0.00) @db.Decimal(3, 2)
   total_reviews                        Int?              @default(0)
-  wallet_id                            String            @db.Char(36)
   applications                         applications[]
   jobs                                 jobs[]
   payment_methods                      payment_methods[]
   payments_payments_receiver_idTousers payments[]        @relation("payments_receiver_idTousers")
   payments_payments_sender_idTousers   payments[]        @relation("payments_sender_idTousers")
   user_skills                          user_skills[]
+  wallets                              wallets[]
 
   @@index([email], map: "idx_email")
   @@index([reset_token], map: "idx_reset_token")
@@ -185,7 +184,11 @@ model wallets {
   currency     String?        @default("USD") @db.VarChar(10)
   created_at   DateTime?      @default(now()) @db.Timestamp(0)
   updated_at   DateTime?      @default(now()) @db.Timestamp(0)
+  user_id      String?        @db.Char(36)
   transactions transactions[]
+  users        users?         @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "wallets_user_id_fk")
+
+  @@index([user_id], map: "wallets_user_id_fk")
 }
 
 enum wallets_type {
