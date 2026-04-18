@@ -10,6 +10,7 @@
     "bcrypt": "^6.0.0",
     "figlet": "^1.11.0",
     "hono": "^4.12.14",
+    "winston": "^3.19.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
