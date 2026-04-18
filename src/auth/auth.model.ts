@@ -24,3 +24,9 @@ export class UserResponseQuery {
 
 export type REGISTER_USER_REQUEST = z.infer<typeof REGISTER_SCHEMA>;
 export type LOGIN_USER_REQUEST = z.infer<typeof LOGIN_SCHEMA>;
+
+export type JWT_PAYLOAD = {
+  sub: string;
+  email: string;
+  exp?: number;
+};

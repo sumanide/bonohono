@@ -1,13 +1,24 @@
 import { prismaService } from "../db/MariaDB";
 import bcrypt from "bcrypt";
 import {
+  type JWT_PAYLOAD,
   type LOGIN_USER_REQUEST,
   type REGISTER_USER_REQUEST,
   UserResponse,
-  UserResponseQuery,
 } from "./auth.model";
 import { HttpStatus } from "../utils/status_code";
 import { HTTPException } from "hono/http-exception";
+import { sign } from "hono/jwt";
+import { SECRET } from "../utils/secret";
+import {
+  deleteCookie,
+  getCookie,
+  getSignedCookie,
+  setCookie,
+  setSignedCookie,
+  generateCookie,
+  generateSignedCookie,
+} from "hono/cookie";
 
 export const authService = {
   async register(req: REGISTER_USER_REQUEST): Promise<UserResponse> {
@@ -50,9 +61,33 @@ export const authService = {
       });
     }
 
+    const match = await bcrypt.compare(req.password, result.password);
+
+    if (match === false || !match) {
+      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
+        message: "Unauthorized",
+      });
+    }
+
+    const pay: JWT_PAYLOAD = {
+      sub: result.id,
+      email: result.email,
+      exp: Math.floor(Date.now() / 1000) + 60 * 5,
+    };
+
+    if (!SECRET || SECRET === undefined) {
+      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
+        message: "SECRET NOT FOUND",
+      });
+    }
+
+    await sign(pay, SECRET);
+
     return {
       email: result.email,
       firstname: result.first_name,
     };
   },
+  // clear cookie / jwt
+  async logout() {},
 };

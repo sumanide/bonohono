@@ -12,10 +12,8 @@ authController.post("/auth/register", async (c) => {
 });
 authController.post("/auth/login", async (c) => {
   const body = await c.req.json();
-  console.log(body);
   const validate = LOGIN_SCHEMA.parse(body);
-  console.log(validate);
   const result = await authService.login(validate);
-  console.log(result);
   return c.json(result, HttpStatus.OK);
 });
+authController.patch();
