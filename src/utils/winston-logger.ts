@@ -5,7 +5,7 @@ export const myFormat = printf(({ level, message, label, timestamp }) => {
   return `${timestamp} [${label}] ${level}: ${message}`;
 });
 
-export const logger = winston.createLogger({
+export const winstonlogger = winston.createLogger({
   level: "debug",
   format: winston.format.combine(
     winston.format.label({ label: "LOGGER" }),

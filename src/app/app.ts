@@ -3,7 +3,7 @@ import { authController } from "../auth/auth.controller";
 import { Hono } from "hono";
 import { prettyJSON } from "hono/pretty-json";
 import { logger } from "hono/logger";
-import figlet from "figlet";
+import { winstonlogger } from "../utils/winston-logger";
 import { HTTPException } from "hono/http-exception";
 import { ZodError } from "zod";
 
@@ -34,9 +34,11 @@ app.onError(async (err, c) => {
   }
 });
 
-const body = figlet.textSync("saken");
-console.log(body);
-
 for (let i = 0; i < app.routes.length; i++) {
-  console.log(`routes: ${app.routes[i]?.path}`);
+  const route = app.routes[i];
+  winstonlogger.info(
+    `[METHOD] ${route?.method.padEnd(6)} | [ROUTE] ${route?.path}`,
+  );
 }
+
+winstonlogger.info("=======================================================");

@@ -31,7 +31,8 @@ export type LOGIN_USER_REQUEST = z.infer<typeof LOGIN_SCHEMA>;
 export type RESET_PASSWORD_REQUEST = z.infer<typeof RESET_PASSWORD_SCHEMA>;
 
 export type JWT_PAYLOAD = {
-  sub: string;
-  email: string;
+  sub?: string;
+  email?: string;
   exp?: number;
+  iat?: number;
 };

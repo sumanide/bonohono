@@ -9,10 +9,11 @@ import {
 } from "./auth.model";
 import { HttpStatus } from "../utils/status_code";
 import { HTTPException } from "hono/http-exception";
-import { sign, decode } from "hono/jwt";
+import { sign, decode, verify } from "hono/jwt";
 import { SECRET } from "../utils/secret";
 import { deleteCookie, getSignedCookie, setSignedCookie } from "hono/cookie";
 import type { Context } from "hono";
+import { winstonlogger } from "../utils/winston-logger";
 
 export const authService = {
   async register(req: REGISTER_USER_REQUEST): Promise<UserResponse> {
@@ -73,8 +74,10 @@ export const authService = {
     const pay: JWT_PAYLOAD = {
       sub: result.id,
       email: result.email,
-      exp: Math.floor(Date.now() / 1000) + 60 * 5,
+      exp: Math.floor(Date.now() / 1000) + 60 * 60,
+      iat: Math.floor(Date.now() / 1000),
     };
+    winstonlogger.debug(pay);
 
     if (!SECRET || SECRET === undefined) {
       throw new HTTPException(HttpStatus.UNAUTHORIZED, {
@@ -91,16 +94,34 @@ export const authService = {
     };
   },
   async logout(c: Context): Promise<void> {
+    const cookie = await getSignedCookie(c, SECRET, "refresh_token");
+    if (!cookie) {
+      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
+        message: "Cookie Already Cleared",
+      });
+    }
     deleteCookie(c, "refresh_token");
   },
   async reset_password(req: RESET_PASSWORD_REQUEST, c: Context): Promise<void> {
+    if (!SECRET || SECRET === undefined) {
+      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
+        message: "SECRET NOT FOUND",
+      });
+    }
     const get_token = await getSignedCookie(c, SECRET, "refresh_token");
     if (!get_token) {
       throw new HTTPException(HttpStatus.UNAUTHORIZED, {
         message: "Unauthorized",
       });
     }
-    const { payload } = decode(get_token);
+    let payload: JWT_PAYLOAD;
+    try {
+      payload = await verify(get_token, SECRET, "HS256");
+    } catch (err) {
+      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
+        message: "Invalid or expired token",
+      });
+    }
     const sub = payload.sub as string;
     const npw = await bcrypt.hash(req.password, 12);
     await prismaService.users.update({
