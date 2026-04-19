@@ -17,34 +17,20 @@ import { winstonlogger } from "../utils/winston-logger";
 
 export const authService = {
   async register(req: REGISTER_USER_REQUEST): Promise<UserResponse> {
-    const validate = await prismaService.users.findUnique({
-      where: { email: req.email },
-    });
-
-    if (validate?.email === req.email) {
-      throw new HTTPException(HttpStatus.BAD_REQUEST, {
-        message: "user already registered",
-      });
-    }
-
     const password = await bcrypt.hash(req.password, 12);
-
-    await prismaService.users.create({
+    const user = await prismaService.users.create({
       data: {
         email: req.email,
         password: password,
         first_name: req.first_name,
         last_name: req.last_name,
       },
+      select: { email: true },
     });
 
-    const user = await prismaService.users.findUnique({
-      where: { email: req.email },
-    });
-
-    if (user?.email === undefined || !user) {
+    if (!user) {
       throw new HTTPException(HttpStatus.BAD_REQUEST, {
-        message: "User not created",
+        message: "Users not created",
       });
     }
 
@@ -53,6 +39,12 @@ export const authService = {
     };
   },
   async login(req: LOGIN_USER_REQUEST, c: Context): Promise<UserResponse> {
+    if (!SECRET || SECRET === undefined) {
+      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
+        message: "SECRET NOT FOUND",
+      });
+    }
+
     const result = await prismaService.users.findUnique({
       where: { email: req.email },
     });
@@ -78,12 +70,6 @@ export const authService = {
       iat: Math.floor(Date.now() / 1000),
     };
     winstonlogger.debug(pay);
-
-    if (!SECRET || SECRET === undefined) {
-      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
-        message: "SECRET NOT FOUND",
-      });
-    }
 
     const token = await sign(pay, SECRET);
     await setSignedCookie(c, "refresh_token", token, SECRET);
