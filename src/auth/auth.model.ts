@@ -21,6 +21,11 @@ export type UserResponse = {
   firstname?: string;
 };
 
+export type UserResponseController = {
+  data: UserResponse;
+  status_code: number;
+};
+
 export type UserResponseQuery = {
   email: string;
   first_name: string;
