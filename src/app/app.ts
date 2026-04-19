@@ -7,7 +7,6 @@ import { winstonlogger } from "../utils/winston-logger";
 import { HTTPException } from "hono/http-exception";
 import { ZodError } from "zod";
 import { Prisma } from "../../generated/prisma/client";
-import { AuthMiddleware } from "../middleware/auth.middleware";
 
 export const app = new Hono();
 app.use("/*", prettyJSON({ force: true }));
