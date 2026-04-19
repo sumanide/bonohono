@@ -4,19 +4,22 @@ import {
   type JWT_PAYLOAD,
   type LOGIN_USER_REQUEST,
   type REGISTER_USER_REQUEST,
+  REGISTER_SCHEMA,
   type RESET_PASSWORD_REQUEST,
   type UserResponse,
+  LOGIN_SCHEMA,
 } from "./auth.model";
 import { HttpStatus } from "../utils/status_code";
 import { HTTPException } from "hono/http-exception";
-import { sign, decode, verify } from "hono/jwt";
+import { sign } from "hono/jwt";
 import { SECRET } from "../utils/secret";
 import { deleteCookie, getSignedCookie, setSignedCookie } from "hono/cookie";
 import type { Context } from "hono";
-import { winstonlogger } from "../utils/winston-logger";
 
 export const authService = {
   async register(req: REGISTER_USER_REQUEST): Promise<UserResponse> {
+    REGISTER_SCHEMA.parse(req);
+
     const password = await bcrypt.hash(req.password, 12);
     const user = await prismaService.users.create({
       data: {
@@ -28,17 +31,13 @@ export const authService = {
       select: { email: true },
     });
 
-    if (!user) {
-      throw new HTTPException(HttpStatus.BAD_REQUEST, {
-        message: "Users not created",
-      });
-    }
-
     return {
       email: user.email,
     };
   },
   async login(req: LOGIN_USER_REQUEST, c: Context): Promise<UserResponse> {
+    LOGIN_SCHEMA.parse(req);
+
     if (!SECRET || SECRET === undefined) {
       throw new HTTPException(HttpStatus.UNAUTHORIZED, {
         message: "SECRET NOT FOUND",
@@ -69,7 +68,6 @@ export const authService = {
       exp: Math.floor(Date.now() / 1000) + 60 * 60,
       iat: Math.floor(Date.now() / 1000),
     };
-    winstonlogger.debug(pay);
 
     const token = await sign(pay, SECRET);
     await setSignedCookie(c, "refresh_token", token, SECRET);
@@ -77,6 +75,12 @@ export const authService = {
     return {
       email: result.email,
       firstname: result.first_name,
+    };
+  },
+  async me(c: Context): Promise<{ data: JWT_PAYLOAD }> {
+    const result = c.get("user");
+    return {
+      data: result,
     };
   },
   async logout(c: Context): Promise<void> {
@@ -89,26 +93,8 @@ export const authService = {
     deleteCookie(c, "refresh_token");
   },
   async reset_password(req: RESET_PASSWORD_REQUEST, c: Context): Promise<void> {
-    if (!SECRET || SECRET === undefined) {
-      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
-        message: "SECRET NOT FOUND",
-      });
-    }
-    const get_token = await getSignedCookie(c, SECRET, "refresh_token");
-    if (!get_token) {
-      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
-        message: "Unauthorized",
-      });
-    }
-    let payload: JWT_PAYLOAD;
-    try {
-      payload = await verify(get_token, SECRET, "HS256");
-    } catch (err) {
-      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
-        message: "Invalid or expired token",
-      });
-    }
-    const sub = payload.sub as string;
+    const payload = c.get("user");
+    const sub: string = payload.sub;
     const npw = await bcrypt.hash(req.password, 12);
     await prismaService.users.update({
       where: { id: sub },
