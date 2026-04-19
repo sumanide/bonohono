@@ -1,7 +1,6 @@
 import { prismaService } from "../db/MariaDB";
 
 export const userService = {
-  // wait until payload come
   // async me() {
   //   const result = await prismaService.
   // }
