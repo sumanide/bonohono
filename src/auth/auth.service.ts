@@ -15,6 +15,7 @@ import { sign } from "hono/jwt";
 import { SECRET } from "../utils/secret";
 import { deleteCookie, getSignedCookie, setSignedCookie } from "hono/cookie";
 import type { Context } from "hono";
+import { winstonlogger } from "../utils/winston-logger";
 
 export const authService = {
   async register(req: REGISTER_USER_REQUEST): Promise<UserResponse> {
@@ -65,6 +66,7 @@ export const authService = {
     const pay: JWT_PAYLOAD = {
       sub: result.id,
       email: result.email,
+      role: result.poster,
       exp: Math.floor(Date.now() / 1000) + 60 * 60,
       iat: Math.floor(Date.now() / 1000),
     };

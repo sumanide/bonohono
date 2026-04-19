@@ -38,6 +38,7 @@ export type RESET_PASSWORD_REQUEST = z.infer<typeof RESET_PASSWORD_SCHEMA>;
 export type JWT_PAYLOAD = {
   sub?: string;
   email?: string;
+  role?: number | null | undefined;
   exp?: number;
   iat?: number;
 };
