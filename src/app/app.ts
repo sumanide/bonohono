@@ -6,6 +6,8 @@ import { logger } from "hono/logger";
 import { winstonlogger } from "../utils/winston-logger";
 import { HTTPException } from "hono/http-exception";
 import { ZodError } from "zod";
+import { Prisma } from "../../generated/prisma/client";
+import { AuthMiddleware } from "../middleware/auth.middleware";
 
 export const app = new Hono();
 app.use("/*", prettyJSON({ force: true }));
@@ -26,6 +28,19 @@ app.onError(async (err, c) => {
     return c.json({
       errors: err.issues,
     });
+  } else if (err instanceof Prisma.PrismaClientKnownRequestError) {
+    if (err.code === "P2002") {
+      c.status(409);
+      return c.json({
+        errors:
+          "There is a unique constraint violation, a new user cannot be created with this email",
+      });
+    } else {
+      c.status(500);
+      return c.json({
+        errors: err.code,
+      });
+    }
   } else {
     c.status(500);
     return c.json({
