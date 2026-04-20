@@ -1,5 +1,4 @@
 import { prismaService } from "../db/MariaDB";
-import bcrypt from "bcrypt";
 import {
   type JWT_PAYLOAD,
   type LOGIN_USER_REQUEST,
@@ -8,6 +7,7 @@ import {
   type RESET_PASSWORD_REQUEST,
   type UserResponse,
   LOGIN_SCHEMA,
+  RESET_PASSWORD_SCHEMA,
 } from "./auth.model";
 import { HttpStatus } from "../utils/status_code";
 import { HTTPException } from "hono/http-exception";
@@ -15,19 +15,23 @@ import { sign } from "hono/jwt";
 import { SECRET } from "../utils/secret";
 import { deleteCookie, getSignedCookie, setSignedCookie } from "hono/cookie";
 import type { Context } from "hono";
-import { winstonlogger } from "../utils/winston-logger";
 
 export const authService = {
   async register(req: REGISTER_USER_REQUEST): Promise<UserResponse> {
-    REGISTER_SCHEMA.parse(req);
+    const request = REGISTER_SCHEMA.parse(req);
 
-    const password = await bcrypt.hash(req.password, 12);
+    const password = await Bun.password.hash(request.password, {
+      algorithm: "argon2id",
+      memoryCost: 4,
+      timeCost: 3,
+    });
+
     const user = await prismaService.users.create({
       data: {
-        email: req.email,
+        email: request.email,
         password: password,
-        first_name: req.first_name,
-        last_name: req.last_name,
+        first_name: request.first_name,
+        last_name: request.last_name ?? null,
       },
       select: { email: true },
     });
@@ -37,27 +41,34 @@ export const authService = {
     };
   },
   async login(req: LOGIN_USER_REQUEST, c: Context): Promise<UserResponse> {
-    LOGIN_SCHEMA.parse(req);
+    const request = LOGIN_SCHEMA.parse(req);
 
     if (!SECRET || SECRET === undefined) {
-      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
-        message: "SECRET NOT FOUND",
+      throw new HTTPException(HttpStatus.BAD_REQUEST, {
+        message: "Secret not found",
       });
     }
 
     const result = await prismaService.users.findUnique({
-      where: { email: req.email },
+      where: { email: request.email },
+      select: {
+        id: true,
+        first_name: true,
+        email: true,
+        password: true,
+        poster: true,
+      },
     });
 
-    if (result === undefined || !result) {
+    if (!result) {
       throw new HTTPException(HttpStatus.UNAUTHORIZED, {
         message: "Unauthorized",
       });
     }
 
-    const match = await bcrypt.compare(req.password, result.password);
+    const match = await Bun.password.verify(request.password, result.password);
 
-    if (match === false || !match) {
+    if (!match) {
       throw new HTTPException(HttpStatus.UNAUTHORIZED, {
         message: "Unauthorized",
       });
@@ -73,10 +84,9 @@ export const authService = {
 
     const token = await sign(pay, SECRET);
     await setSignedCookie(c, "refresh_token", token, SECRET);
-
     return {
+      first_name: result.first_name,
       email: result.email,
-      firstname: result.first_name,
     };
   },
   async me(c: Context): Promise<{ data: JWT_PAYLOAD }> {
@@ -95,9 +105,16 @@ export const authService = {
     deleteCookie(c, "refresh_token");
   },
   async reset_password(req: RESET_PASSWORD_REQUEST, c: Context): Promise<void> {
+    const request = RESET_PASSWORD_SCHEMA.parse(req);
     const payload = c.get("user");
     const sub: string = payload.sub;
-    const npw = await bcrypt.hash(req.password, 12);
+
+    const npw = await Bun.password.hash(request.password, {
+      algorithm: "argon2id",
+      memoryCost: 4,
+      timeCost: 3,
+    });
+
     await prismaService.users.update({
       where: { id: sub },
       data: { password: npw },
