@@ -1,5 +1,5 @@
 import * as winston from "winston";
-const { combine, timestamp, label, printf } = winston.format;
+const { printf } = winston.format;
 
 export const myFormat = printf(({ level, message, label, timestamp }) => {
   return `${timestamp} [${label}] ${level}: ${message}`;

@@ -10,7 +10,7 @@ import { HttpStatus } from "../utils/status_code";
 import { AuthMiddleware } from "../middleware/auth.middleware";
 
 export const authController = new Hono();
-authController.post(async (c: Context) => {
+authController.post("/", async (c: Context) => {
   const body = (await c.req.json()) as REGISTER_USER_REQUEST;
   const result = await authService.register(body);
   return c.json<UserResponseController>({

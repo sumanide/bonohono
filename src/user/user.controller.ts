@@ -5,7 +5,7 @@ import { AuthMiddleware } from "../middleware/auth.middleware.ts";
 
 export const userController = new Hono();
 userController.use(AuthMiddleware);
-userController.get(async (c: Context) => {
+userController.get("/", async (c: Context) => {
   const user = await userService.getAllUser();
   return c.json({
     data: user,
