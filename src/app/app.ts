@@ -7,6 +7,7 @@ import { winstonlogger } from "../utils/winston-logger";
 import { HTTPException } from "hono/http-exception";
 import { ZodError } from "zod";
 import { Prisma } from "../../generated/prisma/client";
+import { JobController } from "../job/job.controller";
 
 export const app = new Hono();
 app.use("/*", prettyJSON({ force: true }));
@@ -14,7 +15,8 @@ app.use("/*", logger());
 app
   .basePath("/api")
   .route("/users", userController)
-  .route("/auth", authController);
+  .route("/auth", authController)
+  .route("/jobs", JobController);
 
 app.onError(async (err, c) => {
   if (err instanceof HTTPException) {
