@@ -15,3 +15,10 @@ JobController.post("/", async (c: Context) => {
     status_code: HttpStatus.CREATED,
   });
 });
+JobController.get("/", async (c: Context) => {
+  const result = await JobService.GetAllJob();
+  return c.json({
+    data: result,
+    status_code: HttpStatus.OK,
+  });
+});
