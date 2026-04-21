@@ -34,11 +34,7 @@ export const REGISTER_JOB_SCHEMA = z.object({
   commitment: z.enum(jobs_commitment),
 });
 
-export type RegisterJobResult = {
-  title: string;
-};
-
-export type GetAllJobResult = {
+export type GetJobResult = {
   id: string;
   poster_id: string;
   title: string;
