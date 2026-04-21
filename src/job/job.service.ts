@@ -5,11 +5,16 @@ import {
   type REGISTER_JOB,
   type RegisterJobResult,
   type GetAllJobResult,
+  type GetJobById,
 } from "./job.model";
 import { winstonlogger } from "../utils/winston-logger";
 export const JobService = {
   async GetAllJob(): Promise<GetAllJobResult[]> {
     const jobs = await prismaService.jobs.findMany();
+    return jobs;
+  },
+  async GetJobById(req: GetJobById): Promise<GetAllJobResult> {
+    const jobs = await prismaService.jobs.findUnique({ where: { id: req.id } });
     return jobs;
   },
   async PostJob(req: REGISTER_JOB, c: Context): Promise<RegisterJobResult> {
