@@ -1,6 +1,8 @@
 import type { Decimal } from "@prisma/client/runtime/index-browser";
 import {
   jobs_commitment,
+  jobs_experience_level,
+  jobs_payment_type,
   jobs_status,
   jobs_work_type,
 } from "../../generated/prisma/enums";
@@ -16,7 +18,7 @@ export type REGISTER_JOB = {
   deadline: Date;
   location: string;
   work_type?: jobs_work_type;
-  comitment: jobs_commitment;
+  commitment: jobs_commitment;
 };
 
 export const REGISTER_JOB_SCHEMA = z.object({
@@ -34,4 +36,23 @@ export const REGISTER_JOB_SCHEMA = z.object({
 
 export type RegisterJobResult = {
   title: string;
+};
+
+export type GetAllJobResult = {
+  id: string;
+  poster_id: string;
+  title: string;
+  description: string;
+  category_id: string | null;
+  budget: Decimal;
+  status: jobs_status;
+  deadline: Date | null;
+  location: string | null;
+  created_at: Date | null;
+  updated_at: Date | null;
+  work_type: jobs_work_type | null;
+  commitment: jobs_commitment | null;
+  experience_level: jobs_experience_level | null;
+  payment_type: jobs_payment_type | null;
+  skills: string | null;
 };
