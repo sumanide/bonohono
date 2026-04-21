@@ -2,6 +2,7 @@ import { Hono, type Context } from "hono";
 import { JobService } from "./job.service";
 import { HttpStatus } from "../utils/status_code";
 import { AuthMiddleware } from "../middleware/auth.middleware";
+import { HTTPException } from "hono/http-exception";
 
 export const JobController = new Hono();
 JobController.use(AuthMiddleware);
@@ -21,8 +22,16 @@ JobController.get("/", async (c: Context) => {
   });
 });
 JobController.get("/:id", async (c: Context) => {
-  const body = await c.req.json();
-  const result = await JobService.GetJobById(body);
+  const rawId = c.req.param("id");
+  if (!rawId) {
+    throw new HTTPException(HttpStatus.BAD_REQUEST, {
+      message: "Id undefined",
+    });
+  }
+  const id: string = rawId;
+  console.dir(c.var, { depth: null });
+  console.log(Object.getOwnPropertyNames(Object.getPrototypeOf(c)));
+  const result = await JobService.GetJobById(id);
   return c.json({
     data: result,
     status_code: HttpStatus.OK,
