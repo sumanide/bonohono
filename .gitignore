@@ -1,4 +1,5 @@
 # deps
 node_modules/
+.gitignore_folder/
 
 /src/generated/prisma
