@@ -4,12 +4,18 @@ import {
   REGISTER_JOB_SCHEMA,
   type REGISTER_JOB,
   type RegisterJobResult,
+  type GetAllJobResult,
 } from "./job.model";
+import { winstonlogger } from "../utils/winston-logger";
 export const JobService = {
-  async GetAllJob() {},
+  async GetAllJob(): Promise<GetAllJobResult[]> {
+    const jobs = await prismaService.jobs.findMany();
+    return jobs;
+  },
   async PostJob(req: REGISTER_JOB, c: Context): Promise<RegisterJobResult> {
     const request = REGISTER_JOB_SCHEMA.parse(req);
     const user_id = c.get("user");
+    winstonlogger.debug(user_id.sub);
     const job = await prismaService.jobs.create({
       data: {
         poster_id: user_id.sub,
