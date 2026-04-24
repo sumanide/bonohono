@@ -13,6 +13,7 @@ export const authController = new Hono();
 authController.post("/", async (c: Context) => {
   const body = (await c.req.json()) as REGISTER_USER_REQUEST;
   const result = await authService.register(body);
+  c.status(HttpStatus.CREATED);
   return c.json<UserResponseController>({
     data: result,
     status_code: HttpStatus.CREATED,
@@ -36,7 +37,7 @@ authController.get("/me", async (c: Context) => {
 authController.patch("/current", async (c: Context) => {
   const body = await c.req.json();
   const validate = RESET_PASSWORD_SCHEMA.parse(body);
-  await authService.reset_password(validate, c);
+  await authService.resetPassword(validate, c);
   return c.json({
     message: "Pasword changed succesfully",
     status_code: HttpStatus.OK,
@@ -46,6 +47,13 @@ authController.delete("/current", async (c: Context) => {
   await authService.logout(c);
   return c.json({
     message: "Cookies cleared succesfully",
+    status_code: HttpStatus.OK,
+  });
+});
+authController.delete("/delete_account", async (c: Context) => {
+  await authService.deleteAccount(c);
+  return c.json({
+    message: "Account deleted succesfully",
     status_code: HttpStatus.OK,
   });
 });
