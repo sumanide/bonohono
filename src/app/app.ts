@@ -40,15 +40,11 @@ app.onError(async (err, c) => {
       });
     } else {
       c.status(500);
-      return c.json({
-        errors: err.code,
-      });
+      return err;
     }
   } else {
     c.status(500);
-    return c.json({
-      errors: err.message,
-    });
+    return c.json(err.message);
   }
 });
 
