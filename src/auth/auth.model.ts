@@ -23,11 +23,16 @@ export type LOGIN_USER_REQUEST = {
 };
 
 export const RESET_PASSWORD_SCHEMA = z.object({
+  email: z.string().email().min(1).max(100),
   password: z.string().min(8).max(100),
 });
 export type RESET_PASSWORD_REQUEST = {
   password: string;
 };
+
+export const DELETE_SCHEMA = z.object({
+  email: z.string().email().min(1).max(100),
+});
 
 // RESPONSE
 export type UserResponse = {
@@ -51,4 +56,9 @@ export type JWT_PAYLOAD = {
   role?: number | null | undefined;
   exp?: number;
   iat?: number;
+};
+
+export type JWT_RESPONSE = {
+  email: string;
+  first_name: string;
 };
