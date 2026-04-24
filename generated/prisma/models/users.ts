@@ -325,6 +325,7 @@ export type usersWhereInput = {
   payment_methods?: Prisma.Payment_methodsListRelationFilter
   payments_payments_receiver_idTousers?: Prisma.PaymentsListRelationFilter
   payments_payments_sender_idTousers?: Prisma.PaymentsListRelationFilter
+  saved_jobs?: Prisma.Saved_jobsListRelationFilter
   user_skills?: Prisma.User_skillsListRelationFilter
   wallets?: Prisma.WalletsListRelationFilter
 }
@@ -352,6 +353,7 @@ export type usersOrderByWithRelationInput = {
   payment_methods?: Prisma.payment_methodsOrderByRelationAggregateInput
   payments_payments_receiver_idTousers?: Prisma.paymentsOrderByRelationAggregateInput
   payments_payments_sender_idTousers?: Prisma.paymentsOrderByRelationAggregateInput
+  saved_jobs?: Prisma.saved_jobsOrderByRelationAggregateInput
   user_skills?: Prisma.user_skillsOrderByRelationAggregateInput
   wallets?: Prisma.walletsOrderByRelationAggregateInput
   _relevance?: Prisma.usersOrderByRelevanceInput
@@ -383,6 +385,7 @@ export type usersWhereUniqueInput = Prisma.AtLeast<{
   payment_methods?: Prisma.Payment_methodsListRelationFilter
   payments_payments_receiver_idTousers?: Prisma.PaymentsListRelationFilter
   payments_payments_sender_idTousers?: Prisma.PaymentsListRelationFilter
+  saved_jobs?: Prisma.Saved_jobsListRelationFilter
   user_skills?: Prisma.User_skillsListRelationFilter
   wallets?: Prisma.WalletsListRelationFilter
 }, "id" | "email" | "reset_token">
@@ -458,6 +461,7 @@ export type usersCreateInput = {
   payment_methods?: Prisma.payment_methodsCreateNestedManyWithoutUsersInput
   payments_payments_receiver_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
   payments_payments_sender_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  saved_jobs?: Prisma.saved_jobsCreateNestedManyWithoutUsersInput
   user_skills?: Prisma.user_skillsCreateNestedManyWithoutUsersInput
   wallets?: Prisma.walletsCreateNestedManyWithoutUsersInput
 }
@@ -485,6 +489,7 @@ export type usersUncheckedCreateInput = {
   payment_methods?: Prisma.payment_methodsUncheckedCreateNestedManyWithoutUsersInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
   payments_payments_sender_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  saved_jobs?: Prisma.saved_jobsUncheckedCreateNestedManyWithoutUsersInput
   user_skills?: Prisma.user_skillsUncheckedCreateNestedManyWithoutUsersInput
   wallets?: Prisma.walletsUncheckedCreateNestedManyWithoutUsersInput
 }
@@ -512,6 +517,7 @@ export type usersUpdateInput = {
   payment_methods?: Prisma.payment_methodsUpdateManyWithoutUsersNestedInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
   payments_payments_sender_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUpdateManyWithoutUsersNestedInput
   user_skills?: Prisma.user_skillsUpdateManyWithoutUsersNestedInput
   wallets?: Prisma.walletsUpdateManyWithoutUsersNestedInput
 }
@@ -539,6 +545,7 @@ export type usersUncheckedUpdateInput = {
   payment_methods?: Prisma.payment_methodsUncheckedUpdateManyWithoutUsersNestedInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
   payments_payments_sender_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUncheckedUpdateManyWithoutUsersNestedInput
   user_skills?: Prisma.user_skillsUncheckedUpdateManyWithoutUsersNestedInput
   wallets?: Prisma.walletsUncheckedUpdateManyWithoutUsersNestedInput
 }
@@ -791,6 +798,20 @@ export type usersUpdateOneWithoutWalletsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutWalletsInput, Prisma.usersUpdateWithoutWalletsInput>, Prisma.usersUncheckedUpdateWithoutWalletsInput>
 }
 
+export type usersCreateNestedOneWithoutSaved_jobsInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutSaved_jobsInput, Prisma.usersUncheckedCreateWithoutSaved_jobsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutSaved_jobsInput
+  connect?: Prisma.usersWhereUniqueInput
+}
+
+export type usersUpdateOneRequiredWithoutSaved_jobsNestedInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutSaved_jobsInput, Prisma.usersUncheckedCreateWithoutSaved_jobsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutSaved_jobsInput
+  upsert?: Prisma.usersUpsertWithoutSaved_jobsInput
+  connect?: Prisma.usersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutSaved_jobsInput, Prisma.usersUpdateWithoutSaved_jobsInput>, Prisma.usersUncheckedUpdateWithoutSaved_jobsInput>
+}
+
 export type usersCreateWithoutApplicationsInput = {
   id?: string
   email: string
@@ -813,6 +834,7 @@ export type usersCreateWithoutApplicationsInput = {
   payment_methods?: Prisma.payment_methodsCreateNestedManyWithoutUsersInput
   payments_payments_receiver_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
   payments_payments_sender_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  saved_jobs?: Prisma.saved_jobsCreateNestedManyWithoutUsersInput
   user_skills?: Prisma.user_skillsCreateNestedManyWithoutUsersInput
   wallets?: Prisma.walletsCreateNestedManyWithoutUsersInput
 }
@@ -839,6 +861,7 @@ export type usersUncheckedCreateWithoutApplicationsInput = {
   payment_methods?: Prisma.payment_methodsUncheckedCreateNestedManyWithoutUsersInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
   payments_payments_sender_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  saved_jobs?: Prisma.saved_jobsUncheckedCreateNestedManyWithoutUsersInput
   user_skills?: Prisma.user_skillsUncheckedCreateNestedManyWithoutUsersInput
   wallets?: Prisma.walletsUncheckedCreateNestedManyWithoutUsersInput
 }
@@ -881,6 +904,7 @@ export type usersUpdateWithoutApplicationsInput = {
   payment_methods?: Prisma.payment_methodsUpdateManyWithoutUsersNestedInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
   payments_payments_sender_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUpdateManyWithoutUsersNestedInput
   user_skills?: Prisma.user_skillsUpdateManyWithoutUsersNestedInput
   wallets?: Prisma.walletsUpdateManyWithoutUsersNestedInput
 }
@@ -907,6 +931,7 @@ export type usersUncheckedUpdateWithoutApplicationsInput = {
   payment_methods?: Prisma.payment_methodsUncheckedUpdateManyWithoutUsersNestedInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
   payments_payments_sender_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUncheckedUpdateManyWithoutUsersNestedInput
   user_skills?: Prisma.user_skillsUncheckedUpdateManyWithoutUsersNestedInput
   wallets?: Prisma.walletsUncheckedUpdateManyWithoutUsersNestedInput
 }
@@ -933,6 +958,7 @@ export type usersCreateWithoutJobsInput = {
   payment_methods?: Prisma.payment_methodsCreateNestedManyWithoutUsersInput
   payments_payments_receiver_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
   payments_payments_sender_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  saved_jobs?: Prisma.saved_jobsCreateNestedManyWithoutUsersInput
   user_skills?: Prisma.user_skillsCreateNestedManyWithoutUsersInput
   wallets?: Prisma.walletsCreateNestedManyWithoutUsersInput
 }
@@ -959,6 +985,7 @@ export type usersUncheckedCreateWithoutJobsInput = {
   payment_methods?: Prisma.payment_methodsUncheckedCreateNestedManyWithoutUsersInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
   payments_payments_sender_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  saved_jobs?: Prisma.saved_jobsUncheckedCreateNestedManyWithoutUsersInput
   user_skills?: Prisma.user_skillsUncheckedCreateNestedManyWithoutUsersInput
   wallets?: Prisma.walletsUncheckedCreateNestedManyWithoutUsersInput
 }
@@ -1001,6 +1028,7 @@ export type usersUpdateWithoutJobsInput = {
   payment_methods?: Prisma.payment_methodsUpdateManyWithoutUsersNestedInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
   payments_payments_sender_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUpdateManyWithoutUsersNestedInput
   user_skills?: Prisma.user_skillsUpdateManyWithoutUsersNestedInput
   wallets?: Prisma.walletsUpdateManyWithoutUsersNestedInput
 }
@@ -1027,6 +1055,7 @@ export type usersUncheckedUpdateWithoutJobsInput = {
   payment_methods?: Prisma.payment_methodsUncheckedUpdateManyWithoutUsersNestedInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
   payments_payments_sender_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUncheckedUpdateManyWithoutUsersNestedInput
   user_skills?: Prisma.user_skillsUncheckedUpdateManyWithoutUsersNestedInput
   wallets?: Prisma.walletsUncheckedUpdateManyWithoutUsersNestedInput
 }
@@ -1053,6 +1082,7 @@ export type usersCreateWithoutPayment_methodsInput = {
   jobs?: Prisma.jobsCreateNestedManyWithoutUsersInput
   payments_payments_receiver_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
   payments_payments_sender_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  saved_jobs?: Prisma.saved_jobsCreateNestedManyWithoutUsersInput
   user_skills?: Prisma.user_skillsCreateNestedManyWithoutUsersInput
   wallets?: Prisma.walletsCreateNestedManyWithoutUsersInput
 }
@@ -1079,6 +1109,7 @@ export type usersUncheckedCreateWithoutPayment_methodsInput = {
   jobs?: Prisma.jobsUncheckedCreateNestedManyWithoutUsersInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
   payments_payments_sender_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  saved_jobs?: Prisma.saved_jobsUncheckedCreateNestedManyWithoutUsersInput
   user_skills?: Prisma.user_skillsUncheckedCreateNestedManyWithoutUsersInput
   wallets?: Prisma.walletsUncheckedCreateNestedManyWithoutUsersInput
 }
@@ -1121,6 +1152,7 @@ export type usersUpdateWithoutPayment_methodsInput = {
   jobs?: Prisma.jobsUpdateManyWithoutUsersNestedInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
   payments_payments_sender_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUpdateManyWithoutUsersNestedInput
   user_skills?: Prisma.user_skillsUpdateManyWithoutUsersNestedInput
   wallets?: Prisma.walletsUpdateManyWithoutUsersNestedInput
 }
@@ -1147,6 +1179,7 @@ export type usersUncheckedUpdateWithoutPayment_methodsInput = {
   jobs?: Prisma.jobsUncheckedUpdateManyWithoutUsersNestedInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
   payments_payments_sender_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUncheckedUpdateManyWithoutUsersNestedInput
   user_skills?: Prisma.user_skillsUncheckedUpdateManyWithoutUsersNestedInput
   wallets?: Prisma.walletsUncheckedUpdateManyWithoutUsersNestedInput
 }
@@ -1173,6 +1206,7 @@ export type usersCreateWithoutPayments_payments_receiver_idTousersInput = {
   jobs?: Prisma.jobsCreateNestedManyWithoutUsersInput
   payment_methods?: Prisma.payment_methodsCreateNestedManyWithoutUsersInput
   payments_payments_sender_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  saved_jobs?: Prisma.saved_jobsCreateNestedManyWithoutUsersInput
   user_skills?: Prisma.user_skillsCreateNestedManyWithoutUsersInput
   wallets?: Prisma.walletsCreateNestedManyWithoutUsersInput
 }
@@ -1199,6 +1233,7 @@ export type usersUncheckedCreateWithoutPayments_payments_receiver_idTousersInput
   jobs?: Prisma.jobsUncheckedCreateNestedManyWithoutUsersInput
   payment_methods?: Prisma.payment_methodsUncheckedCreateNestedManyWithoutUsersInput
   payments_payments_sender_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  saved_jobs?: Prisma.saved_jobsUncheckedCreateNestedManyWithoutUsersInput
   user_skills?: Prisma.user_skillsUncheckedCreateNestedManyWithoutUsersInput
   wallets?: Prisma.walletsUncheckedCreateNestedManyWithoutUsersInput
 }
@@ -1230,6 +1265,7 @@ export type usersCreateWithoutPayments_payments_sender_idTousersInput = {
   jobs?: Prisma.jobsCreateNestedManyWithoutUsersInput
   payment_methods?: Prisma.payment_methodsCreateNestedManyWithoutUsersInput
   payments_payments_receiver_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
+  saved_jobs?: Prisma.saved_jobsCreateNestedManyWithoutUsersInput
   user_skills?: Prisma.user_skillsCreateNestedManyWithoutUsersInput
   wallets?: Prisma.walletsCreateNestedManyWithoutUsersInput
 }
@@ -1256,6 +1292,7 @@ export type usersUncheckedCreateWithoutPayments_payments_sender_idTousersInput =
   jobs?: Prisma.jobsUncheckedCreateNestedManyWithoutUsersInput
   payment_methods?: Prisma.payment_methodsUncheckedCreateNestedManyWithoutUsersInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
+  saved_jobs?: Prisma.saved_jobsUncheckedCreateNestedManyWithoutUsersInput
   user_skills?: Prisma.user_skillsUncheckedCreateNestedManyWithoutUsersInput
   wallets?: Prisma.walletsUncheckedCreateNestedManyWithoutUsersInput
 }
@@ -1298,6 +1335,7 @@ export type usersUpdateWithoutPayments_payments_receiver_idTousersInput = {
   jobs?: Prisma.jobsUpdateManyWithoutUsersNestedInput
   payment_methods?: Prisma.payment_methodsUpdateManyWithoutUsersNestedInput
   payments_payments_sender_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUpdateManyWithoutUsersNestedInput
   user_skills?: Prisma.user_skillsUpdateManyWithoutUsersNestedInput
   wallets?: Prisma.walletsUpdateManyWithoutUsersNestedInput
 }
@@ -1324,6 +1362,7 @@ export type usersUncheckedUpdateWithoutPayments_payments_receiver_idTousersInput
   jobs?: Prisma.jobsUncheckedUpdateManyWithoutUsersNestedInput
   payment_methods?: Prisma.payment_methodsUncheckedUpdateManyWithoutUsersNestedInput
   payments_payments_sender_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUncheckedUpdateManyWithoutUsersNestedInput
   user_skills?: Prisma.user_skillsUncheckedUpdateManyWithoutUsersNestedInput
   wallets?: Prisma.walletsUncheckedUpdateManyWithoutUsersNestedInput
 }
@@ -1361,6 +1400,7 @@ export type usersUpdateWithoutPayments_payments_sender_idTousersInput = {
   jobs?: Prisma.jobsUpdateManyWithoutUsersNestedInput
   payment_methods?: Prisma.payment_methodsUpdateManyWithoutUsersNestedInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUpdateManyWithoutUsersNestedInput
   user_skills?: Prisma.user_skillsUpdateManyWithoutUsersNestedInput
   wallets?: Prisma.walletsUpdateManyWithoutUsersNestedInput
 }
@@ -1387,6 +1427,7 @@ export type usersUncheckedUpdateWithoutPayments_payments_sender_idTousersInput =
   jobs?: Prisma.jobsUncheckedUpdateManyWithoutUsersNestedInput
   payment_methods?: Prisma.payment_methodsUncheckedUpdateManyWithoutUsersNestedInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUncheckedUpdateManyWithoutUsersNestedInput
   user_skills?: Prisma.user_skillsUncheckedUpdateManyWithoutUsersNestedInput
   wallets?: Prisma.walletsUncheckedUpdateManyWithoutUsersNestedInput
 }
@@ -1414,6 +1455,7 @@ export type usersCreateWithoutUser_skillsInput = {
   payment_methods?: Prisma.payment_methodsCreateNestedManyWithoutUsersInput
   payments_payments_receiver_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
   payments_payments_sender_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  saved_jobs?: Prisma.saved_jobsCreateNestedManyWithoutUsersInput
   wallets?: Prisma.walletsCreateNestedManyWithoutUsersInput
 }
 
@@ -1440,6 +1482,7 @@ export type usersUncheckedCreateWithoutUser_skillsInput = {
   payment_methods?: Prisma.payment_methodsUncheckedCreateNestedManyWithoutUsersInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
   payments_payments_sender_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  saved_jobs?: Prisma.saved_jobsUncheckedCreateNestedManyWithoutUsersInput
   wallets?: Prisma.walletsUncheckedCreateNestedManyWithoutUsersInput
 }
 
@@ -1482,6 +1525,7 @@ export type usersUpdateWithoutUser_skillsInput = {
   payment_methods?: Prisma.payment_methodsUpdateManyWithoutUsersNestedInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
   payments_payments_sender_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUpdateManyWithoutUsersNestedInput
   wallets?: Prisma.walletsUpdateManyWithoutUsersNestedInput
 }
 
@@ -1508,6 +1552,7 @@ export type usersUncheckedUpdateWithoutUser_skillsInput = {
   payment_methods?: Prisma.payment_methodsUncheckedUpdateManyWithoutUsersNestedInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
   payments_payments_sender_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUncheckedUpdateManyWithoutUsersNestedInput
   wallets?: Prisma.walletsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
@@ -1534,6 +1579,7 @@ export type usersCreateWithoutWalletsInput = {
   payment_methods?: Prisma.payment_methodsCreateNestedManyWithoutUsersInput
   payments_payments_receiver_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
   payments_payments_sender_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  saved_jobs?: Prisma.saved_jobsCreateNestedManyWithoutUsersInput
   user_skills?: Prisma.user_skillsCreateNestedManyWithoutUsersInput
 }
 
@@ -1560,6 +1606,7 @@ export type usersUncheckedCreateWithoutWalletsInput = {
   payment_methods?: Prisma.payment_methodsUncheckedCreateNestedManyWithoutUsersInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
   payments_payments_sender_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  saved_jobs?: Prisma.saved_jobsUncheckedCreateNestedManyWithoutUsersInput
   user_skills?: Prisma.user_skillsUncheckedCreateNestedManyWithoutUsersInput
 }
 
@@ -1602,6 +1649,7 @@ export type usersUpdateWithoutWalletsInput = {
   payment_methods?: Prisma.payment_methodsUpdateManyWithoutUsersNestedInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
   payments_payments_sender_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUpdateManyWithoutUsersNestedInput
   user_skills?: Prisma.user_skillsUpdateManyWithoutUsersNestedInput
 }
 
@@ -1628,7 +1676,132 @@ export type usersUncheckedUpdateWithoutWalletsInput = {
   payment_methods?: Prisma.payment_methodsUncheckedUpdateManyWithoutUsersNestedInput
   payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
   payments_payments_sender_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  saved_jobs?: Prisma.saved_jobsUncheckedUpdateManyWithoutUsersNestedInput
   user_skills?: Prisma.user_skillsUncheckedUpdateManyWithoutUsersNestedInput
+}
+
+export type usersCreateWithoutSaved_jobsInput = {
+  id?: string
+  email: string
+  password: string
+  first_name: string
+  last_name?: string | null
+  reset_token?: string | null
+  reset_token_expiry?: Date | string | null
+  phone?: string | null
+  bio?: string | null
+  avatar?: string | null
+  created_at?: Date | string | null
+  updated_at?: Date | string | null
+  poster?: number | null
+  settings?: string | null
+  availability_status?: string | null
+  avg_rating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  total_reviews?: number | null
+  applications?: Prisma.applicationsCreateNestedManyWithoutUsersInput
+  jobs?: Prisma.jobsCreateNestedManyWithoutUsersInput
+  payment_methods?: Prisma.payment_methodsCreateNestedManyWithoutUsersInput
+  payments_payments_receiver_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
+  payments_payments_sender_idTousers?: Prisma.paymentsCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  user_skills?: Prisma.user_skillsCreateNestedManyWithoutUsersInput
+  wallets?: Prisma.walletsCreateNestedManyWithoutUsersInput
+}
+
+export type usersUncheckedCreateWithoutSaved_jobsInput = {
+  id?: string
+  email: string
+  password: string
+  first_name: string
+  last_name?: string | null
+  reset_token?: string | null
+  reset_token_expiry?: Date | string | null
+  phone?: string | null
+  bio?: string | null
+  avatar?: string | null
+  created_at?: Date | string | null
+  updated_at?: Date | string | null
+  poster?: number | null
+  settings?: string | null
+  availability_status?: string | null
+  avg_rating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  total_reviews?: number | null
+  applications?: Prisma.applicationsUncheckedCreateNestedManyWithoutUsersInput
+  jobs?: Prisma.jobsUncheckedCreateNestedManyWithoutUsersInput
+  payment_methods?: Prisma.payment_methodsUncheckedCreateNestedManyWithoutUsersInput
+  payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_receiver_idTousersInput
+  payments_payments_sender_idTousers?: Prisma.paymentsUncheckedCreateNestedManyWithoutUsers_payments_sender_idTousersInput
+  user_skills?: Prisma.user_skillsUncheckedCreateNestedManyWithoutUsersInput
+  wallets?: Prisma.walletsUncheckedCreateNestedManyWithoutUsersInput
+}
+
+export type usersCreateOrConnectWithoutSaved_jobsInput = {
+  where: Prisma.usersWhereUniqueInput
+  create: Prisma.XOR<Prisma.usersCreateWithoutSaved_jobsInput, Prisma.usersUncheckedCreateWithoutSaved_jobsInput>
+}
+
+export type usersUpsertWithoutSaved_jobsInput = {
+  update: Prisma.XOR<Prisma.usersUpdateWithoutSaved_jobsInput, Prisma.usersUncheckedUpdateWithoutSaved_jobsInput>
+  create: Prisma.XOR<Prisma.usersCreateWithoutSaved_jobsInput, Prisma.usersUncheckedCreateWithoutSaved_jobsInput>
+  where?: Prisma.usersWhereInput
+}
+
+export type usersUpdateToOneWithWhereWithoutSaved_jobsInput = {
+  where?: Prisma.usersWhereInput
+  data: Prisma.XOR<Prisma.usersUpdateWithoutSaved_jobsInput, Prisma.usersUncheckedUpdateWithoutSaved_jobsInput>
+}
+
+export type usersUpdateWithoutSaved_jobsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.StringFieldUpdateOperationsInput | string
+  last_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reset_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reset_token_expiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  poster?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availability_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avg_rating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  total_reviews?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  applications?: Prisma.applicationsUpdateManyWithoutUsersNestedInput
+  jobs?: Prisma.jobsUpdateManyWithoutUsersNestedInput
+  payment_methods?: Prisma.payment_methodsUpdateManyWithoutUsersNestedInput
+  payments_payments_receiver_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
+  payments_payments_sender_idTousers?: Prisma.paymentsUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  user_skills?: Prisma.user_skillsUpdateManyWithoutUsersNestedInput
+  wallets?: Prisma.walletsUpdateManyWithoutUsersNestedInput
+}
+
+export type usersUncheckedUpdateWithoutSaved_jobsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.StringFieldUpdateOperationsInput | string
+  last_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reset_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reset_token_expiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  poster?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availability_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avg_rating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  total_reviews?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  applications?: Prisma.applicationsUncheckedUpdateManyWithoutUsersNestedInput
+  jobs?: Prisma.jobsUncheckedUpdateManyWithoutUsersNestedInput
+  payment_methods?: Prisma.payment_methodsUncheckedUpdateManyWithoutUsersNestedInput
+  payments_payments_receiver_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_receiver_idTousersNestedInput
+  payments_payments_sender_idTousers?: Prisma.paymentsUncheckedUpdateManyWithoutUsers_payments_sender_idTousersNestedInput
+  user_skills?: Prisma.user_skillsUncheckedUpdateManyWithoutUsersNestedInput
+  wallets?: Prisma.walletsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 
@@ -1642,6 +1815,7 @@ export type UsersCountOutputType = {
   payment_methods: number
   payments_payments_receiver_idTousers: number
   payments_payments_sender_idTousers: number
+  saved_jobs: number
   user_skills: number
   wallets: number
 }
@@ -1652,6 +1826,7 @@ export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   payment_methods?: boolean | UsersCountOutputTypeCountPayment_methodsArgs
   payments_payments_receiver_idTousers?: boolean | UsersCountOutputTypeCountPayments_payments_receiver_idTousersArgs
   payments_payments_sender_idTousers?: boolean | UsersCountOutputTypeCountPayments_payments_sender_idTousersArgs
+  saved_jobs?: boolean | UsersCountOutputTypeCountSaved_jobsArgs
   user_skills?: boolean | UsersCountOutputTypeCountUser_skillsArgs
   wallets?: boolean | UsersCountOutputTypeCountWalletsArgs
 }
@@ -1704,6 +1879,13 @@ export type UsersCountOutputTypeCountPayments_payments_sender_idTousersArgs<ExtA
 /**
  * UsersCountOutputType without action
  */
+export type UsersCountOutputTypeCountSaved_jobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.saved_jobsWhereInput
+}
+
+/**
+ * UsersCountOutputType without action
+ */
 export type UsersCountOutputTypeCountUser_skillsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.user_skillsWhereInput
 }
@@ -1739,6 +1921,7 @@ export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   payment_methods?: boolean | Prisma.users$payment_methodsArgs<ExtArgs>
   payments_payments_receiver_idTousers?: boolean | Prisma.users$payments_payments_receiver_idTousersArgs<ExtArgs>
   payments_payments_sender_idTousers?: boolean | Prisma.users$payments_payments_sender_idTousersArgs<ExtArgs>
+  saved_jobs?: boolean | Prisma.users$saved_jobsArgs<ExtArgs>
   user_skills?: boolean | Prisma.users$user_skillsArgs<ExtArgs>
   wallets?: boolean | Prisma.users$walletsArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
@@ -1773,6 +1956,7 @@ export type usersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   payment_methods?: boolean | Prisma.users$payment_methodsArgs<ExtArgs>
   payments_payments_receiver_idTousers?: boolean | Prisma.users$payments_payments_receiver_idTousersArgs<ExtArgs>
   payments_payments_sender_idTousers?: boolean | Prisma.users$payments_payments_sender_idTousersArgs<ExtArgs>
+  saved_jobs?: boolean | Prisma.users$saved_jobsArgs<ExtArgs>
   user_skills?: boolean | Prisma.users$user_skillsArgs<ExtArgs>
   wallets?: boolean | Prisma.users$walletsArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
@@ -1786,6 +1970,7 @@ export type $usersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     payment_methods: Prisma.$payment_methodsPayload<ExtArgs>[]
     payments_payments_receiver_idTousers: Prisma.$paymentsPayload<ExtArgs>[]
     payments_payments_sender_idTousers: Prisma.$paymentsPayload<ExtArgs>[]
+    saved_jobs: Prisma.$saved_jobsPayload<ExtArgs>[]
     user_skills: Prisma.$user_skillsPayload<ExtArgs>[]
     wallets: Prisma.$walletsPayload<ExtArgs>[]
   }
@@ -2152,6 +2337,7 @@ export interface Prisma__usersClient<T, Null = never, ExtArgs extends runtime.Ty
   payment_methods<T extends Prisma.users$payment_methodsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$payment_methodsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$payment_methodsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments_payments_receiver_idTousers<T extends Prisma.users$payments_payments_receiver_idTousersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$payments_payments_receiver_idTousersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$paymentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments_payments_sender_idTousers<T extends Prisma.users$payments_payments_sender_idTousersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$payments_payments_sender_idTousersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$paymentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  saved_jobs<T extends Prisma.users$saved_jobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$saved_jobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$saved_jobsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user_skills<T extends Prisma.users$user_skillsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$user_skillsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$user_skillsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   wallets<T extends Prisma.users$walletsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$walletsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$walletsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -2665,6 +2851,30 @@ export type users$payments_payments_sender_idTousersArgs<ExtArgs extends runtime
   take?: number
   skip?: number
   distinct?: Prisma.PaymentsScalarFieldEnum | Prisma.PaymentsScalarFieldEnum[]
+}
+
+/**
+ * users.saved_jobs
+ */
+export type users$saved_jobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the saved_jobs
+   */
+  select?: Prisma.saved_jobsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the saved_jobs
+   */
+  omit?: Prisma.saved_jobsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.saved_jobsInclude<ExtArgs> | null
+  where?: Prisma.saved_jobsWhereInput
+  orderBy?: Prisma.saved_jobsOrderByWithRelationInput | Prisma.saved_jobsOrderByWithRelationInput[]
+  cursor?: Prisma.saved_jobsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Saved_jobsScalarFieldEnum | Prisma.Saved_jobsScalarFieldEnum[]
 }
 
 /**

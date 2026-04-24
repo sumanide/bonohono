@@ -308,6 +308,7 @@ export type jobsWhereInput = {
   categories?: Prisma.XOR<Prisma.CategoriesNullableScalarRelationFilter, Prisma.categoriesWhereInput> | null
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
   payments?: Prisma.PaymentsListRelationFilter
+  saved_jobs?: Prisma.Saved_jobsListRelationFilter
 }
 
 export type jobsOrderByWithRelationInput = {
@@ -331,6 +332,7 @@ export type jobsOrderByWithRelationInput = {
   categories?: Prisma.categoriesOrderByWithRelationInput
   users?: Prisma.usersOrderByWithRelationInput
   payments?: Prisma.paymentsOrderByRelationAggregateInput
+  saved_jobs?: Prisma.saved_jobsOrderByRelationAggregateInput
   _relevance?: Prisma.jobsOrderByRelevanceInput
 }
 
@@ -358,6 +360,7 @@ export type jobsWhereUniqueInput = Prisma.AtLeast<{
   categories?: Prisma.XOR<Prisma.CategoriesNullableScalarRelationFilter, Prisma.categoriesWhereInput> | null
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
   payments?: Prisma.PaymentsListRelationFilter
+  saved_jobs?: Prisma.Saved_jobsListRelationFilter
 }, "id">
 
 export type jobsOrderByWithAggregationInput = {
@@ -425,6 +428,7 @@ export type jobsCreateInput = {
   categories?: Prisma.categoriesCreateNestedOneWithoutJobsInput
   users: Prisma.usersCreateNestedOneWithoutJobsInput
   payments?: Prisma.paymentsCreateNestedManyWithoutJobsInput
+  saved_jobs?: Prisma.saved_jobsCreateNestedManyWithoutJobsInput
 }
 
 export type jobsUncheckedCreateInput = {
@@ -446,6 +450,7 @@ export type jobsUncheckedCreateInput = {
   skills?: string | null
   applications?: Prisma.applicationsUncheckedCreateNestedManyWithoutJobsInput
   payments?: Prisma.paymentsUncheckedCreateNestedManyWithoutJobsInput
+  saved_jobs?: Prisma.saved_jobsUncheckedCreateNestedManyWithoutJobsInput
 }
 
 export type jobsUpdateInput = {
@@ -467,6 +472,7 @@ export type jobsUpdateInput = {
   categories?: Prisma.categoriesUpdateOneWithoutJobsNestedInput
   users?: Prisma.usersUpdateOneRequiredWithoutJobsNestedInput
   payments?: Prisma.paymentsUpdateManyWithoutJobsNestedInput
+  saved_jobs?: Prisma.saved_jobsUpdateManyWithoutJobsNestedInput
 }
 
 export type jobsUncheckedUpdateInput = {
@@ -488,6 +494,7 @@ export type jobsUncheckedUpdateInput = {
   skills?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   applications?: Prisma.applicationsUncheckedUpdateManyWithoutJobsNestedInput
   payments?: Prisma.paymentsUncheckedUpdateManyWithoutJobsNestedInput
+  saved_jobs?: Prisma.saved_jobsUncheckedUpdateManyWithoutJobsNestedInput
 }
 
 export type jobsCreateManyInput = {
@@ -771,6 +778,20 @@ export type jobsUncheckedUpdateManyWithoutUsersNestedInput = {
   deleteMany?: Prisma.jobsScalarWhereInput | Prisma.jobsScalarWhereInput[]
 }
 
+export type jobsCreateNestedOneWithoutSaved_jobsInput = {
+  create?: Prisma.XOR<Prisma.jobsCreateWithoutSaved_jobsInput, Prisma.jobsUncheckedCreateWithoutSaved_jobsInput>
+  connectOrCreate?: Prisma.jobsCreateOrConnectWithoutSaved_jobsInput
+  connect?: Prisma.jobsWhereUniqueInput
+}
+
+export type jobsUpdateOneRequiredWithoutSaved_jobsNestedInput = {
+  create?: Prisma.XOR<Prisma.jobsCreateWithoutSaved_jobsInput, Prisma.jobsUncheckedCreateWithoutSaved_jobsInput>
+  connectOrCreate?: Prisma.jobsCreateOrConnectWithoutSaved_jobsInput
+  upsert?: Prisma.jobsUpsertWithoutSaved_jobsInput
+  connect?: Prisma.jobsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.jobsUpdateToOneWithWhereWithoutSaved_jobsInput, Prisma.jobsUpdateWithoutSaved_jobsInput>, Prisma.jobsUncheckedUpdateWithoutSaved_jobsInput>
+}
+
 export type jobsCreateWithoutApplicationsInput = {
   id?: string
   title: string
@@ -789,6 +810,7 @@ export type jobsCreateWithoutApplicationsInput = {
   categories?: Prisma.categoriesCreateNestedOneWithoutJobsInput
   users: Prisma.usersCreateNestedOneWithoutJobsInput
   payments?: Prisma.paymentsCreateNestedManyWithoutJobsInput
+  saved_jobs?: Prisma.saved_jobsCreateNestedManyWithoutJobsInput
 }
 
 export type jobsUncheckedCreateWithoutApplicationsInput = {
@@ -809,6 +831,7 @@ export type jobsUncheckedCreateWithoutApplicationsInput = {
   payment_type?: $Enums.jobs_payment_type | null
   skills?: string | null
   payments?: Prisma.paymentsUncheckedCreateNestedManyWithoutJobsInput
+  saved_jobs?: Prisma.saved_jobsUncheckedCreateNestedManyWithoutJobsInput
 }
 
 export type jobsCreateOrConnectWithoutApplicationsInput = {
@@ -845,6 +868,7 @@ export type jobsUpdateWithoutApplicationsInput = {
   categories?: Prisma.categoriesUpdateOneWithoutJobsNestedInput
   users?: Prisma.usersUpdateOneRequiredWithoutJobsNestedInput
   payments?: Prisma.paymentsUpdateManyWithoutJobsNestedInput
+  saved_jobs?: Prisma.saved_jobsUpdateManyWithoutJobsNestedInput
 }
 
 export type jobsUncheckedUpdateWithoutApplicationsInput = {
@@ -865,6 +889,7 @@ export type jobsUncheckedUpdateWithoutApplicationsInput = {
   payment_type?: Prisma.NullableEnumjobs_payment_typeFieldUpdateOperationsInput | $Enums.jobs_payment_type | null
   skills?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   payments?: Prisma.paymentsUncheckedUpdateManyWithoutJobsNestedInput
+  saved_jobs?: Prisma.saved_jobsUncheckedUpdateManyWithoutJobsNestedInput
 }
 
 export type jobsCreateWithoutCategoriesInput = {
@@ -885,6 +910,7 @@ export type jobsCreateWithoutCategoriesInput = {
   applications?: Prisma.applicationsCreateNestedManyWithoutJobsInput
   users: Prisma.usersCreateNestedOneWithoutJobsInput
   payments?: Prisma.paymentsCreateNestedManyWithoutJobsInput
+  saved_jobs?: Prisma.saved_jobsCreateNestedManyWithoutJobsInput
 }
 
 export type jobsUncheckedCreateWithoutCategoriesInput = {
@@ -905,6 +931,7 @@ export type jobsUncheckedCreateWithoutCategoriesInput = {
   skills?: string | null
   applications?: Prisma.applicationsUncheckedCreateNestedManyWithoutJobsInput
   payments?: Prisma.paymentsUncheckedCreateNestedManyWithoutJobsInput
+  saved_jobs?: Prisma.saved_jobsUncheckedCreateNestedManyWithoutJobsInput
 }
 
 export type jobsCreateOrConnectWithoutCategoriesInput = {
@@ -973,6 +1000,7 @@ export type jobsCreateWithoutPaymentsInput = {
   applications?: Prisma.applicationsCreateNestedManyWithoutJobsInput
   categories?: Prisma.categoriesCreateNestedOneWithoutJobsInput
   users: Prisma.usersCreateNestedOneWithoutJobsInput
+  saved_jobs?: Prisma.saved_jobsCreateNestedManyWithoutJobsInput
 }
 
 export type jobsUncheckedCreateWithoutPaymentsInput = {
@@ -993,6 +1021,7 @@ export type jobsUncheckedCreateWithoutPaymentsInput = {
   payment_type?: $Enums.jobs_payment_type | null
   skills?: string | null
   applications?: Prisma.applicationsUncheckedCreateNestedManyWithoutJobsInput
+  saved_jobs?: Prisma.saved_jobsUncheckedCreateNestedManyWithoutJobsInput
 }
 
 export type jobsCreateOrConnectWithoutPaymentsInput = {
@@ -1029,6 +1058,7 @@ export type jobsUpdateWithoutPaymentsInput = {
   applications?: Prisma.applicationsUpdateManyWithoutJobsNestedInput
   categories?: Prisma.categoriesUpdateOneWithoutJobsNestedInput
   users?: Prisma.usersUpdateOneRequiredWithoutJobsNestedInput
+  saved_jobs?: Prisma.saved_jobsUpdateManyWithoutJobsNestedInput
 }
 
 export type jobsUncheckedUpdateWithoutPaymentsInput = {
@@ -1049,6 +1079,7 @@ export type jobsUncheckedUpdateWithoutPaymentsInput = {
   payment_type?: Prisma.NullableEnumjobs_payment_typeFieldUpdateOperationsInput | $Enums.jobs_payment_type | null
   skills?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   applications?: Prisma.applicationsUncheckedUpdateManyWithoutJobsNestedInput
+  saved_jobs?: Prisma.saved_jobsUncheckedUpdateManyWithoutJobsNestedInput
 }
 
 export type jobsCreateWithoutUsersInput = {
@@ -1069,6 +1100,7 @@ export type jobsCreateWithoutUsersInput = {
   applications?: Prisma.applicationsCreateNestedManyWithoutJobsInput
   categories?: Prisma.categoriesCreateNestedOneWithoutJobsInput
   payments?: Prisma.paymentsCreateNestedManyWithoutJobsInput
+  saved_jobs?: Prisma.saved_jobsCreateNestedManyWithoutJobsInput
 }
 
 export type jobsUncheckedCreateWithoutUsersInput = {
@@ -1089,6 +1121,7 @@ export type jobsUncheckedCreateWithoutUsersInput = {
   skills?: string | null
   applications?: Prisma.applicationsUncheckedCreateNestedManyWithoutJobsInput
   payments?: Prisma.paymentsUncheckedCreateNestedManyWithoutJobsInput
+  saved_jobs?: Prisma.saved_jobsUncheckedCreateNestedManyWithoutJobsInput
 }
 
 export type jobsCreateOrConnectWithoutUsersInput = {
@@ -1115,6 +1148,106 @@ export type jobsUpdateWithWhereUniqueWithoutUsersInput = {
 export type jobsUpdateManyWithWhereWithoutUsersInput = {
   where: Prisma.jobsScalarWhereInput
   data: Prisma.XOR<Prisma.jobsUpdateManyMutationInput, Prisma.jobsUncheckedUpdateManyWithoutUsersInput>
+}
+
+export type jobsCreateWithoutSaved_jobsInput = {
+  id?: string
+  title: string
+  description: string
+  budget: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status: $Enums.jobs_status
+  deadline?: Date | string | null
+  location?: string | null
+  created_at?: Date | string | null
+  updated_at?: Date | string | null
+  work_type?: $Enums.jobs_work_type | null
+  commitment?: $Enums.jobs_commitment | null
+  experience_level?: $Enums.jobs_experience_level | null
+  payment_type?: $Enums.jobs_payment_type | null
+  skills?: string | null
+  applications?: Prisma.applicationsCreateNestedManyWithoutJobsInput
+  categories?: Prisma.categoriesCreateNestedOneWithoutJobsInput
+  users: Prisma.usersCreateNestedOneWithoutJobsInput
+  payments?: Prisma.paymentsCreateNestedManyWithoutJobsInput
+}
+
+export type jobsUncheckedCreateWithoutSaved_jobsInput = {
+  id?: string
+  poster_id: string
+  title: string
+  description: string
+  category_id?: string | null
+  budget: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status: $Enums.jobs_status
+  deadline?: Date | string | null
+  location?: string | null
+  created_at?: Date | string | null
+  updated_at?: Date | string | null
+  work_type?: $Enums.jobs_work_type | null
+  commitment?: $Enums.jobs_commitment | null
+  experience_level?: $Enums.jobs_experience_level | null
+  payment_type?: $Enums.jobs_payment_type | null
+  skills?: string | null
+  applications?: Prisma.applicationsUncheckedCreateNestedManyWithoutJobsInput
+  payments?: Prisma.paymentsUncheckedCreateNestedManyWithoutJobsInput
+}
+
+export type jobsCreateOrConnectWithoutSaved_jobsInput = {
+  where: Prisma.jobsWhereUniqueInput
+  create: Prisma.XOR<Prisma.jobsCreateWithoutSaved_jobsInput, Prisma.jobsUncheckedCreateWithoutSaved_jobsInput>
+}
+
+export type jobsUpsertWithoutSaved_jobsInput = {
+  update: Prisma.XOR<Prisma.jobsUpdateWithoutSaved_jobsInput, Prisma.jobsUncheckedUpdateWithoutSaved_jobsInput>
+  create: Prisma.XOR<Prisma.jobsCreateWithoutSaved_jobsInput, Prisma.jobsUncheckedCreateWithoutSaved_jobsInput>
+  where?: Prisma.jobsWhereInput
+}
+
+export type jobsUpdateToOneWithWhereWithoutSaved_jobsInput = {
+  where?: Prisma.jobsWhereInput
+  data: Prisma.XOR<Prisma.jobsUpdateWithoutSaved_jobsInput, Prisma.jobsUncheckedUpdateWithoutSaved_jobsInput>
+}
+
+export type jobsUpdateWithoutSaved_jobsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.Enumjobs_statusFieldUpdateOperationsInput | $Enums.jobs_status
+  deadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  work_type?: Prisma.NullableEnumjobs_work_typeFieldUpdateOperationsInput | $Enums.jobs_work_type | null
+  commitment?: Prisma.NullableEnumjobs_commitmentFieldUpdateOperationsInput | $Enums.jobs_commitment | null
+  experience_level?: Prisma.NullableEnumjobs_experience_levelFieldUpdateOperationsInput | $Enums.jobs_experience_level | null
+  payment_type?: Prisma.NullableEnumjobs_payment_typeFieldUpdateOperationsInput | $Enums.jobs_payment_type | null
+  skills?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  applications?: Prisma.applicationsUpdateManyWithoutJobsNestedInput
+  categories?: Prisma.categoriesUpdateOneWithoutJobsNestedInput
+  users?: Prisma.usersUpdateOneRequiredWithoutJobsNestedInput
+  payments?: Prisma.paymentsUpdateManyWithoutJobsNestedInput
+}
+
+export type jobsUncheckedUpdateWithoutSaved_jobsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  poster_id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  category_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.Enumjobs_statusFieldUpdateOperationsInput | $Enums.jobs_status
+  deadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  work_type?: Prisma.NullableEnumjobs_work_typeFieldUpdateOperationsInput | $Enums.jobs_work_type | null
+  commitment?: Prisma.NullableEnumjobs_commitmentFieldUpdateOperationsInput | $Enums.jobs_commitment | null
+  experience_level?: Prisma.NullableEnumjobs_experience_levelFieldUpdateOperationsInput | $Enums.jobs_experience_level | null
+  payment_type?: Prisma.NullableEnumjobs_payment_typeFieldUpdateOperationsInput | $Enums.jobs_payment_type | null
+  skills?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  applications?: Prisma.applicationsUncheckedUpdateManyWithoutJobsNestedInput
+  payments?: Prisma.paymentsUncheckedUpdateManyWithoutJobsNestedInput
 }
 
 export type jobsCreateManyCategoriesInput = {
@@ -1153,6 +1286,7 @@ export type jobsUpdateWithoutCategoriesInput = {
   applications?: Prisma.applicationsUpdateManyWithoutJobsNestedInput
   users?: Prisma.usersUpdateOneRequiredWithoutJobsNestedInput
   payments?: Prisma.paymentsUpdateManyWithoutJobsNestedInput
+  saved_jobs?: Prisma.saved_jobsUpdateManyWithoutJobsNestedInput
 }
 
 export type jobsUncheckedUpdateWithoutCategoriesInput = {
@@ -1173,6 +1307,7 @@ export type jobsUncheckedUpdateWithoutCategoriesInput = {
   skills?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   applications?: Prisma.applicationsUncheckedUpdateManyWithoutJobsNestedInput
   payments?: Prisma.paymentsUncheckedUpdateManyWithoutJobsNestedInput
+  saved_jobs?: Prisma.saved_jobsUncheckedUpdateManyWithoutJobsNestedInput
 }
 
 export type jobsUncheckedUpdateManyWithoutCategoriesInput = {
@@ -1229,6 +1364,7 @@ export type jobsUpdateWithoutUsersInput = {
   applications?: Prisma.applicationsUpdateManyWithoutJobsNestedInput
   categories?: Prisma.categoriesUpdateOneWithoutJobsNestedInput
   payments?: Prisma.paymentsUpdateManyWithoutJobsNestedInput
+  saved_jobs?: Prisma.saved_jobsUpdateManyWithoutJobsNestedInput
 }
 
 export type jobsUncheckedUpdateWithoutUsersInput = {
@@ -1249,6 +1385,7 @@ export type jobsUncheckedUpdateWithoutUsersInput = {
   skills?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   applications?: Prisma.applicationsUncheckedUpdateManyWithoutJobsNestedInput
   payments?: Prisma.paymentsUncheckedUpdateManyWithoutJobsNestedInput
+  saved_jobs?: Prisma.saved_jobsUncheckedUpdateManyWithoutJobsNestedInput
 }
 
 export type jobsUncheckedUpdateManyWithoutUsersInput = {
@@ -1277,11 +1414,13 @@ export type jobsUncheckedUpdateManyWithoutUsersInput = {
 export type JobsCountOutputType = {
   applications: number
   payments: number
+  saved_jobs: number
 }
 
 export type JobsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   applications?: boolean | JobsCountOutputTypeCountApplicationsArgs
   payments?: boolean | JobsCountOutputTypeCountPaymentsArgs
+  saved_jobs?: boolean | JobsCountOutputTypeCountSaved_jobsArgs
 }
 
 /**
@@ -1308,6 +1447,13 @@ export type JobsCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.paymentsWhereInput
 }
 
+/**
+ * JobsCountOutputType without action
+ */
+export type JobsCountOutputTypeCountSaved_jobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.saved_jobsWhereInput
+}
+
 
 export type jobsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1330,6 +1476,7 @@ export type jobsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   categories?: boolean | Prisma.jobs$categoriesArgs<ExtArgs>
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
   payments?: boolean | Prisma.jobs$paymentsArgs<ExtArgs>
+  saved_jobs?: boolean | Prisma.jobs$saved_jobsArgs<ExtArgs>
   _count?: boolean | Prisma.JobsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["jobs"]>
 
@@ -1360,6 +1507,7 @@ export type jobsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   categories?: boolean | Prisma.jobs$categoriesArgs<ExtArgs>
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
   payments?: boolean | Prisma.jobs$paymentsArgs<ExtArgs>
+  saved_jobs?: boolean | Prisma.jobs$saved_jobsArgs<ExtArgs>
   _count?: boolean | Prisma.JobsCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1370,6 +1518,7 @@ export type $jobsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     categories: Prisma.$categoriesPayload<ExtArgs> | null
     users: Prisma.$usersPayload<ExtArgs>
     payments: Prisma.$paymentsPayload<ExtArgs>[]
+    saved_jobs: Prisma.$saved_jobsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1732,6 +1881,7 @@ export interface Prisma__jobsClient<T, Null = never, ExtArgs extends runtime.Typ
   categories<T extends Prisma.jobs$categoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.jobs$categoriesArgs<ExtArgs>>): Prisma.Prisma__categoriesClient<runtime.Types.Result.GetResult<Prisma.$categoriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   users<T extends Prisma.usersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usersDefaultArgs<ExtArgs>>): Prisma.Prisma__usersClient<runtime.Types.Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   payments<T extends Prisma.jobs$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.jobs$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$paymentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  saved_jobs<T extends Prisma.jobs$saved_jobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.jobs$saved_jobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$saved_jobsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2189,6 +2339,30 @@ export type jobs$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.PaymentsScalarFieldEnum | Prisma.PaymentsScalarFieldEnum[]
+}
+
+/**
+ * jobs.saved_jobs
+ */
+export type jobs$saved_jobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the saved_jobs
+   */
+  select?: Prisma.saved_jobsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the saved_jobs
+   */
+  omit?: Prisma.saved_jobsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.saved_jobsInclude<ExtArgs> | null
+  where?: Prisma.saved_jobsWhereInput
+  orderBy?: Prisma.saved_jobsOrderByWithRelationInput | Prisma.saved_jobsOrderByWithRelationInput[]
+  cursor?: Prisma.saved_jobsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Saved_jobsScalarFieldEnum | Prisma.Saved_jobsScalarFieldEnum[]
 }
 
 /**
