@@ -8,6 +8,7 @@ import { HTTPException } from "hono/http-exception";
 import { ZodError } from "zod";
 import { Prisma } from "../../generated/prisma/client";
 import { JobController } from "../job/job.controller";
+import { SavedJobController } from "../saved_job/saved_job.controller";
 
 export const app = new Hono();
 app.use("/*", prettyJSON({ force: true }));
@@ -16,7 +17,8 @@ app
   .basePath("/api")
   .route("/users", userController)
   .route("/auth", authController)
-  .route("/jobs", JobController);
+  .route("/jobs", JobController)
+  .route("/saved-jobs", SavedJobController);
 
 app.onError(async (err, c) => {
   if (err instanceof HTTPException) {
