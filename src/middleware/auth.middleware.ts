@@ -29,6 +29,7 @@ export const AuthMiddleware: MiddlewareHandler = async (c, next) => {
     });
   }
   c.set("user", {
+    id: user.sub,
     email: user.email,
     poster: user.role,
   });
