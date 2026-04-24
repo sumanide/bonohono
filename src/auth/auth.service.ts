@@ -8,6 +8,7 @@ import {
   type UserResponse,
   LOGIN_SCHEMA,
   RESET_PASSWORD_SCHEMA,
+  type JWT_RESPONSE,
 } from "./auth.model";
 import { HttpStatus } from "../utils/status_code";
 import { HTTPException } from "hono/http-exception";
@@ -104,10 +105,10 @@ export const authService = {
     }
     deleteCookie(c, "refresh_token");
   },
-  async reset_password(req: RESET_PASSWORD_REQUEST, c: Context): Promise<void> {
+  async resetPassword(req: RESET_PASSWORD_REQUEST, c: Context): Promise<void> {
     const request = RESET_PASSWORD_SCHEMA.parse(req);
     const payload = c.get("user");
-    const sub: string = payload.sub;
+    const email: string = request.email;
 
     const npw = await Bun.password.hash(request.password, {
       algorithm: "argon2id",
@@ -116,8 +117,18 @@ export const authService = {
     });
 
     await prismaService.users.update({
-      where: { id: sub },
+      where: { email: email },
       data: { password: npw },
     });
+  },
+  async deleteAccount(c: Context) {
+    const user: JWT_RESPONSE = c.get("user");
+    console.log(c.get("user"));
+    if (!user) {
+      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
+        message: "Unauthorized",
+      });
+    }
+    // await prismaService.users.delete({ where: { email: user.email } });
   },
 };
