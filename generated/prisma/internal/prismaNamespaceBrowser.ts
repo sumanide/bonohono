@@ -60,7 +60,8 @@ export const ModelName = {
   transactions: 'transactions',
   user_skills: 'user_skills',
   users: 'users',
-  wallets: 'wallets'
+  wallets: 'wallets',
+  saved_jobs: 'saved_jobs'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -230,6 +231,16 @@ export const WalletsScalarFieldEnum = {
 export type WalletsScalarFieldEnum = (typeof WalletsScalarFieldEnum)[keyof typeof WalletsScalarFieldEnum]
 
 
+export const Saved_jobsScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  job_id: 'job_id',
+  created_at: 'created_at'
+} as const
+
+export type Saved_jobsScalarFieldEnum = (typeof Saved_jobsScalarFieldEnum)[keyof typeof Saved_jobsScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -354,4 +365,13 @@ export const walletsOrderByRelevanceFieldEnum = {
 } as const
 
 export type walletsOrderByRelevanceFieldEnum = (typeof walletsOrderByRelevanceFieldEnum)[keyof typeof walletsOrderByRelevanceFieldEnum]
+
+
+export const saved_jobsOrderByRelevanceFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  job_id: 'job_id'
+} as const
+
+export type saved_jobsOrderByRelevanceFieldEnum = (typeof saved_jobsOrderByRelevanceFieldEnum)[keyof typeof saved_jobsOrderByRelevanceFieldEnum]
 

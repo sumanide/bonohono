@@ -393,7 +393,8 @@ export const ModelName = {
   transactions: 'transactions',
   user_skills: 'user_skills',
   users: 'users',
-  wallets: 'wallets'
+  wallets: 'wallets',
+  saved_jobs: 'saved_jobs'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -409,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "applications" | "categories" | "jobs" | "payment_methods" | "payments" | "skills" | "transactions" | "user_skills" | "users" | "wallets"
+    modelProps: "applications" | "categories" | "jobs" | "payment_methods" | "payments" | "skills" | "transactions" | "user_skills" | "users" | "wallets" | "saved_jobs"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1073,6 +1074,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    saved_jobs: {
+      payload: Prisma.$saved_jobsPayload<ExtArgs>
+      fields: Prisma.saved_jobsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.saved_jobsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$saved_jobsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.saved_jobsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$saved_jobsPayload>
+        }
+        findFirst: {
+          args: Prisma.saved_jobsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$saved_jobsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.saved_jobsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$saved_jobsPayload>
+        }
+        findMany: {
+          args: Prisma.saved_jobsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$saved_jobsPayload>[]
+        }
+        create: {
+          args: Prisma.saved_jobsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$saved_jobsPayload>
+        }
+        createMany: {
+          args: Prisma.saved_jobsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.saved_jobsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$saved_jobsPayload>
+        }
+        update: {
+          args: Prisma.saved_jobsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$saved_jobsPayload>
+        }
+        deleteMany: {
+          args: Prisma.saved_jobsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.saved_jobsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.saved_jobsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$saved_jobsPayload>
+        }
+        aggregate: {
+          args: Prisma.Saved_jobsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSaved_jobs>
+        }
+        groupBy: {
+          args: Prisma.saved_jobsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Saved_jobsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.saved_jobsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Saved_jobsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1263,6 +1330,16 @@ export const WalletsScalarFieldEnum = {
 export type WalletsScalarFieldEnum = (typeof WalletsScalarFieldEnum)[keyof typeof WalletsScalarFieldEnum]
 
 
+export const Saved_jobsScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  job_id: 'job_id',
+  created_at: 'created_at'
+} as const
+
+export type Saved_jobsScalarFieldEnum = (typeof Saved_jobsScalarFieldEnum)[keyof typeof Saved_jobsScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1387,6 +1464,15 @@ export const walletsOrderByRelevanceFieldEnum = {
 } as const
 
 export type walletsOrderByRelevanceFieldEnum = (typeof walletsOrderByRelevanceFieldEnum)[keyof typeof walletsOrderByRelevanceFieldEnum]
+
+
+export const saved_jobsOrderByRelevanceFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  job_id: 'job_id'
+} as const
+
+export type saved_jobsOrderByRelevanceFieldEnum = (typeof saved_jobsOrderByRelevanceFieldEnum)[keyof typeof saved_jobsOrderByRelevanceFieldEnum]
 
 
 
@@ -1611,6 +1697,7 @@ export type GlobalOmitConfig = {
   user_skills?: Prisma.user_skillsOmit
   users?: Prisma.usersOmit
   wallets?: Prisma.walletsOmit
+  saved_jobs?: Prisma.saved_jobsOmit
 }
 
 /* Types for Logging */

@@ -58,6 +58,7 @@ model jobs {
   categories       categories?            @relation(fields: [category_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "users_id_category_id_fk")
   users            users                  @relation(fields: [poster_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "users_id_poster_id_fk")
   payments         payments[]
+  saved_jobs       saved_jobs[]
 
   @@index([category_id], map: "idx_jobs_category")
   @@index([commitment], map: "idx_jobs_commitment")
@@ -168,6 +169,7 @@ model users {
   payment_methods                      payment_methods[]
   payments_payments_receiver_idTousers payments[]        @relation("payments_receiver_idTousers")
   payments_payments_sender_idTousers   payments[]        @relation("payments_sender_idTousers")
+  saved_jobs                           saved_jobs[]
   user_skills                          user_skills[]
   wallets                              wallets[]
 
@@ -189,6 +191,20 @@ model wallets {
   users        users?         @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "wallets_user_id_fk")
 
   @@index([user_id], map: "wallets_user_id_fk")
+}
+
+model saved_jobs {
+  id         String    @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  user_id    String    @db.Char(36)
+  job_id     String    @db.Char(36)
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+  jobs       jobs      @relation(fields: [job_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "saved_jobs_job_id_fk")
+  users      users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "saved_jobs_user_id_fk")
+
+  @@unique([user_id, job_id], map: "unique_user_job")
+  @@index([created_at], map: "idx_saved_jobs_created_at")
+  @@index([job_id], map: "idx_saved_jobs_job")
+  @@index([user_id], map: "idx_saved_jobs_user")
 }
 
 enum wallets_type {

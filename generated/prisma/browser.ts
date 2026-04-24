@@ -67,3 +67,8 @@ export type users = Prisma.usersModel
  * 
  */
 export type wallets = Prisma.walletsModel
+/**
+ * Model saved_jobs
+ * 
+ */
+export type saved_jobs = Prisma.saved_jobsModel
