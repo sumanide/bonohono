@@ -23,7 +23,6 @@ export const JobService = {
     return jobs;
   },
   async GetJobIdWhereCategory(req: string, c: Context) {
-    // const request = GET_JOB_BY_CATEGORY_SCHEMA.parse(req);
     const user = c.get("user");
 
     if (!user) {
@@ -33,8 +32,26 @@ export const JobService = {
     }
 
     const result = await prismaService.jobs.findMany({
+      select: {
+        title: true,
+        description: true,
+        budget: true,
+        status: true,
+        deadline: true,
+        location: true,
+        work_type: true,
+        commitment: true,
+        skills: true,
+        experience_level: true,
+        payment_type: true,
+        categories: {
+          select: {
+            name: true,
+            description: true,
+          },
+        },
+      },
       where: { category_id: req },
-      include: { categories: true },
     });
 
     if (!result) {
