@@ -15,7 +15,21 @@ JobController.post("/", async (c: Context) => {
   });
 });
 JobController.get("/", async (c: Context) => {
-  const result = await JobService.GetAllJob();
+  const result = await JobService.GetAllJob(c);
+  return c.json({
+    data: result,
+    status_code: HttpStatus.OK,
+  });
+});
+JobController.get("/categories/:category_id", async (c: Context) => {
+  const rawId = c.req.param("category_id");
+  if (!rawId || rawId === undefined) {
+    throw new HTTPException(HttpStatus.BAD_REQUEST, {
+      message: "body not found",
+    });
+  }
+  const id: string = rawId;
+  const result = await JobService.GetJobIdWhereCategory(id, c);
   return c.json({
     data: result,
     status_code: HttpStatus.OK,
@@ -29,8 +43,8 @@ JobController.get("/:id", async (c: Context) => {
     });
   }
   const id: string = rawId;
-  console.dir(c.var, { depth: null });
-  console.log(Object.getOwnPropertyNames(Object.getPrototypeOf(c)));
+  // console.dir(c.var, { depth: null });
+  // console.log(Object.getOwnPropertyNames(Object.getPrototypeOf(c)));
   const result = await JobService.GetJobById(id);
   return c.json({
     data: result,
