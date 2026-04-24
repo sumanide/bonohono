@@ -1,20 +1,23 @@
 import { Hono, type Context } from "hono";
-import { JobService } from "../job/job.service";
 import { HttpStatus } from "../utils/status_code";
+import { SavedJobService } from "./saved_job.service";
+import { AuthMiddleware } from "../middleware/auth.middleware";
+import type { CREATE_JOB_REQUEST } from "./saved_job.model";
 
 export const SavedJobController = new Hono();
+SavedJobController.use("*", AuthMiddleware);
 SavedJobController.post("/", async (c: Context) => {
-  const job_id: string = await c.req.json();
-  const result = await JobService.CreateSavedJob(c, job_id);
+  const raw: CREATE_JOB_REQUEST = await c.req.json();
+  const job_id: string = raw.job_id;
+  const result = await SavedJobService.CreateSavedJob(c, job_id);
+  c.status(HttpStatus.CREATED);
   return c.json({
     data: result,
     status_code: HttpStatus.CREATED,
   });
 });
 SavedJobController.get("/", async (c: Context) => {
-  const user_id = await c.req.json();
-  console.log(user_id);
-  const result = await JobService.GetSavedJobByUserId(user_id);
+  const result = await SavedJobService.GetSavedJobByUserId(c);
   return c.json({
     data: result,
     status_code: HttpStatus.CREATED,
