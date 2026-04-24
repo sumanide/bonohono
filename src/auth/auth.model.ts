@@ -59,6 +59,7 @@ export type JWT_PAYLOAD = {
 };
 
 export type JWT_RESPONSE = {
+  id: string;
   email: string;
   first_name: string;
 };
