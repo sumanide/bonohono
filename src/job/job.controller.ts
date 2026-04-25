@@ -51,6 +51,16 @@ JobController.get("/:id", async (c: Context) => {
     status_code: HttpStatus.OK,
   });
 });
-// JobController.get("/:id/complete", async (c: Context) => {
-//   const id =
-// })
+JobController.get("/:id/complete", async (c: Context) => {
+  const id = c.req.param("id");
+  if (!id) {
+    throw new HTTPException(HttpStatus.BAD_REQUEST, {
+      message: "Param not found",
+    });
+  }
+  const result = await JobService.GetJobCompleteByUserId(id);
+  return c.json({
+    data: result,
+    status_code: HttpStatus.OK,
+  });
+});
