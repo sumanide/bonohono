@@ -182,4 +182,112 @@ export const JobService = {
     });
     return jobs;
   },
+  async GetJobOpenByUserId(id: string): Promise<GetJobResult[]> {
+    const jobs = await prismaService.jobs.findMany({
+      where: {
+        poster_id: id,
+        status: "open",
+      },
+      select: {
+        id: true,
+        poster_id: true,
+        title: true,
+        description: true,
+        category_id: true,
+        budget: true,
+        status: true,
+        deadline: true,
+        location: true,
+        work_type: true,
+        commitment: true,
+        experience_level: true,
+        payment_type: true,
+        skills: true,
+        created_at: true,
+        updated_at: true,
+      },
+    });
+    return jobs;
+  },
+  async GetJobInProgressByUserId(id: string): Promise<GetJobResult[]> {
+    const jobs = await prismaService.jobs.findMany({
+      where: {
+        poster_id: id,
+        status: "in_progress",
+      },
+      select: {
+        id: true,
+        poster_id: true,
+        title: true,
+        description: true,
+        category_id: true,
+        budget: true,
+        status: true,
+        deadline: true,
+        location: true,
+        work_type: true,
+        commitment: true,
+        experience_level: true,
+        payment_type: true,
+        skills: true,
+        created_at: true,
+        updated_at: true,
+      },
+    });
+    return jobs;
+  },
+  async GetJobReadyForPaymentByUserId(id: string): Promise<GetJobResult[]> {
+    const jobs = await prismaService.jobs.findMany({
+      where: {
+        poster_id: id,
+        status: "ready_for_payment",
+      },
+      select: {
+        id: true,
+        poster_id: true,
+        title: true,
+        description: true,
+        category_id: true,
+        budget: true,
+        status: true,
+        deadline: true,
+        location: true,
+        work_type: true,
+        commitment: true,
+        experience_level: true,
+        payment_type: true,
+        skills: true,
+        created_at: true,
+        updated_at: true,
+      },
+    });
+    return jobs;
+  },
+  async GetJobCancelledByUserId(id: string): Promise<GetJobResult[]> {
+    const jobs = await prismaService.jobs.findMany({
+      where: {
+        poster_id: id,
+        status: "cancelled",
+      },
+      select: {
+        id: true,
+        poster_id: true,
+        title: true,
+        description: true,
+        category_id: true,
+        budget: true,
+        status: true,
+        deadline: true,
+        location: true,
+        work_type: true,
+        commitment: true,
+        experience_level: true,
+        payment_type: true,
+        skills: true,
+        created_at: true,
+        updated_at: true,
+      },
+    });
+    return jobs;
+  },
 };
