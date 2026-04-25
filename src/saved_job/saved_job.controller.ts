@@ -23,3 +23,10 @@ SavedJobController.get("/", async (c: Context) => {
     status_code: HttpStatus.CREATED,
   });
 });
+SavedJobController.delete("/", async (c: Context) => {
+  await SavedJobService.DeleteSavedJob(c);
+  return c.json({
+    message: "Job delete from saved",
+    status_code: HttpStatus.OK,
+  });
+});
