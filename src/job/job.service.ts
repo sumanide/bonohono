@@ -4,8 +4,6 @@ import {
   REGISTER_JOB_SCHEMA,
   type REGISTER_JOB,
   type GetJobResult,
-  type GET_JOB_BY_CATEGORY_REQUEST,
-  GET_JOB_BY_CATEGORY_SCHEMA,
 } from "./job.model";
 import { winstonlogger } from "../utils/winston-logger";
 import { HTTPException } from "hono/http-exception";
@@ -111,10 +109,27 @@ export const JobService = {
     };
   },
   async GetJobById(id: string): Promise<GetJobResult> {
-    console.log(id);
     winstonlogger.debug("executed: ");
     const jobs = await prismaService.jobs.findUnique({
       where: { id: id },
+      select: {
+        id: true,
+        poster_id: true,
+        title: true,
+        description: true,
+        category_id: true,
+        budget: true,
+        status: true,
+        deadline: true,
+        location: true,
+        work_type: true,
+        commitment: true,
+        experience_level: true,
+        payment_type: true,
+        skills: true,
+        created_at: true,
+        updated_at: true,
+      },
     });
     if (!jobs) {
       throw new HTTPException(HttpStatus.BAD_REQUEST, {
@@ -139,5 +154,32 @@ export const JobService = {
       created_at: jobs.created_at,
       updated_at: jobs.updated_at,
     };
+  },
+  async GetJobCompleteByUserId(id: string): Promise<GetJobResult[]> {
+    const jobs = await prismaService.jobs.findMany({
+      where: {
+        poster_id: id,
+        status: "completed",
+      },
+      select: {
+        id: true,
+        poster_id: true,
+        title: true,
+        description: true,
+        category_id: true,
+        budget: true,
+        status: true,
+        deadline: true,
+        location: true,
+        work_type: true,
+        commitment: true,
+        experience_level: true,
+        payment_type: true,
+        skills: true,
+        created_at: true,
+        updated_at: true,
+      },
+    });
+    return jobs;
   },
 };
