@@ -129,6 +129,6 @@ export const authService = {
         message: "Unauthorized",
       });
     }
-    // await prismaService.users.delete({ where: { email: user.email } });
+    await prismaService.users.delete({ where: { email: user.email } });
   },
 };
