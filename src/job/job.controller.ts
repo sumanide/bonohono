@@ -21,7 +21,7 @@ JobController.get("/", async (c: Context) => {
     status_code: HttpStatus.OK,
   });
 });
-JobController.get("/categories/:category_id", async (c: Context) => {
+JobController.get("/cg/:category_id", async (c: Context) => {
   const rawId = c.req.param("category_id");
   if (!rawId || rawId === undefined) {
     throw new HTTPException(HttpStatus.BAD_REQUEST, {
@@ -51,3 +51,6 @@ JobController.get("/:id", async (c: Context) => {
     status_code: HttpStatus.OK,
   });
 });
+// JobController.get("/:id/complete", async (c: Context) => {
+//   const id =
+// })
