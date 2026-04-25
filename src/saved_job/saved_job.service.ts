@@ -5,7 +5,8 @@ import type { JWT_RESPONSE } from "../auth/auth.model";
 
 export const SavedJobService = {
   async GetSavedJobByUserId(c: Context) {
-    const user: JWT_RESPONSE = c.get("user");
+    const user = c.get("user");
+    console.log(user);
     const saved_job = await prismaService.$queryRaw<GetSavedJobResultQuery>`
     SELECT
     sj.id as saved_job_id,
@@ -51,5 +52,12 @@ ORDER BY sj.created_at DESC`;
       select: { job_id: true },
     });
     return job;
+  },
+  async DeleteSavedJob(c: Context): Promise<void> {
+    const jobs = await c.req.json();
+    const user: JWT_RESPONSE = c.get("user");
+    await prismaService.$executeRaw`
+    DELETE from saved_jobs where job_id = ${jobs.job_id} 
+    AND user_id = ${user.id}`;
   },
 };
