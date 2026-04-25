@@ -62,4 +62,5 @@ export type JWT_RESPONSE = {
   id: string;
   email: string;
   first_name: string;
+  poster: number;
 };
