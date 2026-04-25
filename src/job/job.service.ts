@@ -10,6 +10,7 @@ import {
 import { winstonlogger } from "../utils/winston-logger";
 import { HTTPException } from "hono/http-exception";
 import { HttpStatus } from "../utils/status_code";
+import type { JWT_RESPONSE } from "../auth/auth.model";
 
 export const JobService = {
   async GetAllJob(c: Context): Promise<GetJobResult[]> {
@@ -64,11 +65,21 @@ export const JobService = {
   },
   async PostJob(req: REGISTER_JOB, c: Context): Promise<GetJobResult> {
     const request = REGISTER_JOB_SCHEMA.parse(req);
-    const user_id = c.get("user");
-    winstonlogger.debug(user_id.sub);
+    const user: JWT_RESPONSE = c.get("user");
+    if (!user.id || user.id === undefined) {
+      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
+        message: "Unauthorized",
+      });
+    }
+    if (user.poster !== 1) {
+      throw new HTTPException(HttpStatus.BAD_REQUEST, {
+        message: "role must be poster",
+      });
+    }
+    winstonlogger.debug(user.id);
     const job = await prismaService.jobs.create({
       data: {
-        poster_id: user_id.sub,
+        poster_id: user.id,
         title: request.title,
         budget: request.budget,
         description: request.description,
