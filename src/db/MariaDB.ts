@@ -7,7 +7,7 @@ const adapter = new PrismaMariaDb({
   user: Bun.env["DATABASE_USER"] as string,
   password: Bun.env["DATABASE_PASSWORD"] as string,
   database: Bun.env["DATABASE_NAME"] as string,
-  connectionLimit: 5,
+  connectionLimit: 20,
 });
 
 export const prismaService = new PrismaClient({ adapter });
