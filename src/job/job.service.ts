@@ -8,28 +8,36 @@ import {
 import { winstonlogger } from "../utils/winston-logger";
 import { HTTPException } from "hono/http-exception";
 import { HttpStatus } from "../utils/status_code";
-import type { JWT_RESPONSE } from "../auth/auth.model";
 
 export const JobService = {
-  async GetAllJob(c: Context): Promise<GetJobResult[]> {
-    const user = c.get("user");
-    if (!user) {
-      throw new HTTPException(HttpStatus.BAD_REQUEST, {
-        message: "Unauthorized",
-      });
-    }
-    const jobs = await prismaService.jobs.findMany();
+  async GetAllJob(): Promise<GetJobResult[]> {
+    const jobs = await prismaService.jobs.findMany({
+      select: {
+        id: true,
+        poster_id: true,
+        title: true,
+        description: true,
+        category_id: true,
+        budget: true,
+        status: true,
+        deadline: true,
+        location: true,
+        work_type: true,
+        commitment: true,
+        experience_level: true,
+        payment_type: true,
+        skills: true,
+        created_at: true,
+        updated_at: true,
+      },
+      take: 20,
+      orderBy: {
+        created_at: "desc",
+      },
+    });
     return jobs;
   },
-  async GetJobIdWhereCategory(req: string, c: Context) {
-    const user = c.get("user");
-
-    if (!user) {
-      throw new HTTPException(HttpStatus.BAD_REQUEST, {
-        message: "Unauthorized",
-      });
-    }
-
+  async GetJobIdWhereCategory(req: string) {
     const result = await prismaService.jobs.findMany({
       select: {
         title: true,
@@ -51,6 +59,10 @@ export const JobService = {
         },
       },
       where: { category_id: req },
+      take: 20,
+      orderBy: {
+        created_at: "desc",
+      },
     });
 
     if (!result) {
@@ -61,23 +73,11 @@ export const JobService = {
 
     return result;
   },
-  async PostJob(req: REGISTER_JOB, c: Context): Promise<GetJobResult> {
+  async PostJob(req: REGISTER_JOB, userId: string): Promise<GetJobResult> {
     const request = REGISTER_JOB_SCHEMA.parse(req);
-    const user: JWT_RESPONSE = c.get("user");
-    if (!user.id || user.id === undefined) {
-      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
-        message: "Unauthorized",
-      });
-    }
-    if (user.poster !== 1) {
-      throw new HTTPException(HttpStatus.BAD_REQUEST, {
-        message: "role must be poster",
-      });
-    }
-    winstonlogger.debug(user.id);
     const job = await prismaService.jobs.create({
       data: {
-        poster_id: user.id,
+        poster_id: userId,
         title: request.title,
         budget: request.budget,
         description: request.description,
@@ -179,6 +179,10 @@ export const JobService = {
         created_at: true,
         updated_at: true,
       },
+      take: 20,
+      orderBy: {
+        created_at: "desc",
+      },
     });
     return jobs;
   },
@@ -205,6 +209,10 @@ export const JobService = {
         skills: true,
         created_at: true,
         updated_at: true,
+      },
+      take: 20,
+      orderBy: {
+        created_at: "desc",
       },
     });
     return jobs;
@@ -233,6 +241,10 @@ export const JobService = {
         created_at: true,
         updated_at: true,
       },
+      take: 20,
+      orderBy: {
+        created_at: "desc",
+      },
     });
     return jobs;
   },
@@ -260,6 +272,10 @@ export const JobService = {
         created_at: true,
         updated_at: true,
       },
+      take: 20,
+      orderBy: {
+        created_at: "desc",
+      },
     });
     return jobs;
   },
@@ -286,6 +302,10 @@ export const JobService = {
         skills: true,
         created_at: true,
         updated_at: true,
+      },
+      take: 20,
+      orderBy: {
+        created_at: "desc",
       },
     });
     return jobs;
