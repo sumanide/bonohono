@@ -1,17 +1,19 @@
 import { Hono, type Context } from "hono";
 import { authService } from "./auth.service";
 import {
+  type JWT_RESPONSE,
   type LOGIN_USER_REQUEST,
   type REGISTER_USER_REQUEST,
-  RESET_PASSWORD_SCHEMA,
+  type RESET_PASSWORD_REQUEST,
   type UserResponseController,
 } from "./auth.model";
 import { HttpStatus } from "../utils/status_code";
 import { AuthMiddleware } from "../middleware/auth.middleware";
+import { HTTPException } from "hono/http-exception";
 
 export const authController = new Hono();
 authController.post("/", async (c: Context) => {
-  const body = (await c.req.json()) as REGISTER_USER_REQUEST;
+  const body: REGISTER_USER_REQUEST = await c.req.json();
   const result = await authService.register(body);
   c.status(HttpStatus.CREATED);
   return c.json<UserResponseController>({
@@ -20,7 +22,7 @@ authController.post("/", async (c: Context) => {
   });
 });
 authController.post("/login", async (c: Context) => {
-  const body = (await c.req.json()) as LOGIN_USER_REQUEST;
+  const body: LOGIN_USER_REQUEST = await c.req.json();
   const result = await authService.login(body, c);
   return c.json({
     data: result,
@@ -35,9 +37,14 @@ authController.get("/me", async (c: Context) => {
   });
 });
 authController.patch("/current", async (c: Context) => {
-  const body = await c.req.json();
-  const validate = RESET_PASSWORD_SCHEMA.parse(body);
-  await authService.resetPassword(validate, c);
+  const user: JWT_RESPONSE = c.get("user");
+  if (!user) {
+    throw new HTTPException(HttpStatus.UNAUTHORIZED, {
+      message: "UNAUTHORIZED",
+    });
+  }
+  const body: RESET_PASSWORD_REQUEST = await c.req.json();
+  await authService.resetPassword(body, user.email);
   return c.json({
     message: "Pasword changed succesfully",
     status_code: HttpStatus.OK,
@@ -51,7 +58,8 @@ authController.delete("/current", async (c: Context) => {
   });
 });
 authController.delete("/delete_account", async (c: Context) => {
-  await authService.deleteAccount(c);
+  const user: JWT_RESPONSE = c.get("user");
+  await authService.deleteAccount(user.email);
   return c.json({
     message: "Account deleted succesfully",
     status_code: HttpStatus.OK,
